@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Vzor pro sazbu kvalifikační práce
+%
+% Západočeská univerzita v Plzni
+% Fakulta aplikovaných věd
+% Katedra informatiky a výpočetní techniky
+%
+% Petr Lobaz, lobaz@kiv.zcu.cz, 2016/03/14
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Možné jazyky práce: czech, english
+% Možné typy práce: BP (bakalářská), DP (diplomová), PRJ5 (Projekt 5)
+\documentclass[czech,PRJ5]{thesiskiv}
+
+% Definujte údaje pro vstupní strany
+%
+% Jméno a příjmení; kvůli textu prohlášení určete, 
+% zda jde o mužské, nebo ženské jméno.
+\author{Vaněk Jakub}
+\declarationmale
+
+%alternativa: 
+%\declarationfemale
+
+% Název práce
+\title{Generování konfigurací softwarových komponent\\ z modelů vlastností}
+
+% 
+% Texty abstraktů (anglicky, česky)
+%
+\abstracttexten{The text of the abstract (in English). It contains the English translation of the thesis title and a short description of the thesis.}
+
+\abstracttextcz{Text abstraktu (česky). Obsahuje krátkou anotaci (cca 10 řádek) v češtině. Budete ji potřebovat i při vyplňování údajů o bakalářské práci ve STAGu. Český i anglický abstrakt by měly být na stejné stránce a měly by si obsahem co možná nejvíce odpovídat (samozřejmě není možný doslovný překlad!).
+}
+
+% Na titulní stranu a do textu prohlášení se automaticky vkládá 
+% aktuální rok, resp. datum. Můžete je změnit:
+%\titlepageyear{2016}
+%\declarationdate{1. března 2016}
+
+% Ve zvláštních případech je možné ovlivnit i ostatní texty:
+%
+%\university{Západočeská univerzita v Plzni}
+%\faculty{Fakulta aplikovaných věd}
+%\department{Katedra informatiky a výpočetní techniky}
+%\subject{Bakalářská práce}
+%\titlepagetown{Plzeň}
+%\declarationtown{Plzni}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DODATEČNÉ BALÍČKY PRO SAZBU
+% Jejich užívání či neužívání záleží na libovůli autora 
+% práce
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Zařadit literaturu do obsahu
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+% Umožňuje vkládání obrázků
+\usepackage[pdftex]{graphicx}
+
+% Odkazy v PDF jsou aktivní; navíc se automaticky vkládá
+% balíček 'url', který umožňuje např. dělení slov
+% uvnitř URL
+\usepackage[pdftex]{hyperref}
+\hypersetup{colorlinks=true,
+  unicode=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black,
+  bookmarksopen=true}
+
+% Při používání citačního stylu csplainnatkiv
+% (odvozen z csplainnat, http://repo.or.cz/w/csplainnat.git)
+% lze snadno modifikovat vzhled citací v textu
+\usepackage[numbers,sort&compress]{natbib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% VLASTNÍ TEXT PRÁCE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%
+\maketitle
+\tableofcontents
+
+\chapter{Úvod}
+
+Generování softwarových komponent bude využívat generativního programování. Generativní programování je způsob programování, kdy je zdrojový kód programu generován na základě šablony. Tuto šablonu tvoří různé vzory.  
+
+K vytvoření šablony, pro vygenerování finálního zdrojového kódu bude v práci využíván model vlastností. Model vlastností zachycuje všechny různorodosti a podobnosti všech možných variant finálního produktu. Různé charakteristiky, které finální produkty rozlišují se nazývají právě vlastnosti. 
+
+Cílem této práce bude vygenerovat šablonu jako model vlastností ze zápisu gramatiky jazyka tesa pomocí frameworku Xtext a na základě vybraných vlastností z tohoto modelu vygenerovat finální zdrojový kód a ušetřit tak programátorům čas strávený přepisováním zdrojových kódů při změně gramatiky nebo změně konfigurace, či vytvoření nových variant konfigurace.
+
+Čtenář je v úvodní části seznámen s problematikou modelování vlastností, nástroji které jsou pro modelování, nebo tvorbu modelů využívány. Dále bude seznámen s problematikou generativního programování a frameworkem Xtext, který je jednoduchým frameworkem pro tvorbu vlastního jazyka.
+
+\chapter{Modelování vlastností}
+
+Účelem této kapitol je seznámit čtenáře s problematikou modelování vlastností, které je v práci použito jako šablona pro generování zdrojového kódu konfigurátoru. Modelování vlastností úzce souvisí s pojmem \textit{Doménové inženýrství}, kterému se budeme také krátce věnovat.
+
+\section{Motivace}
+
+Motivaci pro modelování vlastností si ukážeme na příkladě. Představme si, že společnost vyvíjí kávovar. Kávovar bude vždy připravovat kávu, avšak jeho vlastnosti se mohou lišit na základě předem určených specifikací. Součástí specifikace může být požadavek, že kávovar bude vyvíjen pro různé trhy, například pro Evropský trh a trh v USA. Dále můze být vyžadováno vytvoření dvou různých edic kávovaru, pro příklad standartní edici a deluxe edici, kde deluxe edice bude oproti standartní edici obsahovat trysku na čistou horkou vodu a displej. Za těchto předpokladů je třeba si uvědomit, že kávovar pro Americký a Evropský trh bude využívat jiný adaptér. Pro Evropský trh je potřeba klasických 220V a pro USA 120V.
+Kávovar se v tomto případě nazývá produktovou řadou, nebo jinak produktovou rodinou. Produktová rodina je pojem, který označuje skupinu produktů, které fungují na stejném principu, ale liší se od sebe různými vlastnostmi, tudíž je vytvořeno několik variant. Varianty je třeba spravovat. Je potřeba znázornit, které vlastnosti bude jaká varianta obsahovat, jak na sobě vlastnosti závisí, které a zda jsou potřeba. K tomu nám slouží právě model vlastností. Tento model je tvořen procesem, který nazýváme modelování vlastností.
+
+\section{Model vlastností}
+\subsection{Vlastnosti}
+\subsection{Typy vlastností}
+\subsection{Grafické znázornění}
+
+\bibliographystyle{csplainnatkiv}
+{\raggedright\small
+\bibliography{literatura}
+}
+
+\end{document}
