@@ -101,17 +101,95 @@ Cílem této práce bude vygenerovat šablonu jako model vlastností ze zápisu 
 
 \chapter{Modelování vlastností}
 
-Účelem této kapitol je seznámit čtenáře s problematikou modelování vlastností, které je v práci použito jako šablona pro generování zdrojového kódu konfigurátoru. Modelování vlastností úzce souvisí s pojmem \textit{Doménové inženýrství}, kterému se budeme také krátce věnovat.
+Účelem této kapitoly je seznámit čtenáře s problematikou modelování vlastností, které je v práci použito jako šablona pro generování zdrojového kódu konfigurátoru a s nástroji které. Modelování vlastností úzce souvisí s pojmem \textit{Doménové inženýrství}, kterému se budeme také krátce věnovat.
 
 \section{Motivace}
 
-Motivaci pro modelování vlastností si ukážeme na příkladě. Představme si, že společnost vyvíjí kávovar. Kávovar bude vždy připravovat kávu, avšak jeho vlastnosti se mohou lišit na základě předem určených specifikací. Součástí specifikace může být požadavek, že kávovar bude vyvíjen pro různé trhy, například pro Evropský trh a trh v USA. Dále můze být vyžadováno vytvoření dvou různých edic kávovaru, pro příklad standartní edici a deluxe edici, kde deluxe edice bude oproti standartní edici obsahovat trysku na čistou horkou vodu a displej. Za těchto předpokladů je třeba si uvědomit, že kávovar pro Americký a Evropský trh bude využívat jiný adaptér. Pro Evropský trh je potřeba klasických 220V a pro USA 120V.
-Kávovar se v tomto případě nazývá produktovou řadou, nebo jinak produktovou rodinou. Produktová rodina je pojem, který označuje skupinu produktů, které fungují na stejném principu, ale liší se od sebe různými vlastnostmi, tudíž je vytvořeno několik variant. Varianty je třeba spravovat. Je potřeba znázornit, které vlastnosti bude jaká varianta obsahovat, jak na sobě vlastnosti závisí, které a zda jsou potřeba. K tomu nám slouží právě model vlastností. Tento model je tvořen procesem, který nazýváme modelování vlastností.
+Motivaci pro modelování vlastností si ukážeme na příkladě. Představme si, že společnost vyvíjí kávovar. Kávovar bude vždy připravovat kávu, avšak jeho vlastnosti se mohou lišit na základě předem určených specifikací. Součástí specifikace může být požadavek, že kávovar bude vyvíjen pro různé trhy, například pro Evropský trh a trh v USA. Dále můze být vyžadováno vytvoření dvou různých edic kávovaru, pro příklad standartní edici a deluxe edici, kde deluxe edice bude oproti standartní edici obsahovat trysku na čistou horkou vodu a displej. Za těchto předpokladů je třeba si uvědomit, že kávovar pro Americký a Evropský trh bude využívat jiný adaptér. Pro Evropský trh je potřeba klasických 220V a pro USA 120V. Zároveň je u kávovaru možno si zvolit, zda bude nebo nebude mít nastavitelné množštví kávových zrn a množství vody, ze které bude káva připravena.
+
+Kávovar se v tomto případě nazývá produktovou řadou, produktovou rodinou, nebo také konceptem. Produktová rodina, či koncept, jsou pojmy, které označují skupinu produktů, které fungují na stejném principu, ale liší se od sebe různými vlastnostmi, tudíž je vytvořeno několik variant. Varianty je třeba spravovat. Je potřeba znázornit, které vlastnosti bude jaká varianta obsahovat, jak na sobě vlastnosti závisí, které a zda jsou potřeba. K tomu nám slouží právě model vlastností.
+
+Tento model je tvořen procesem, který nazýváme modelování vlastností. Vytvořit takovýto model má hned několik výhod. Základní výhodou je přehlednost. Pokud zkonstruujeme správný model vlastností, je v něm na první pohled vidět, jaké produkty můžeme z vlastností sestavit. Model se poté dá použít pro nové verze stejného produktu tím, že se některé vlastnosti změní, nebo také jednoduše přidají.
+
+Hlavní motivací je tedy identifikace a zachycení variability, znovupoužitelnost a rozšířitelnost systému či produktu.
 
 \section{Model vlastností}
+
 \subsection{Vlastnosti}
+
+Každý koncept je tvořen z určitých charakteristik. Tyto charakteristiky nazýváme vlastnostmi. Pojem vlastnosti můžeme aplikovat jak na vyráběné produkty, tak na různé vlastnosti systému. Příkladem vlastností u vyráběných produktů mohou být vlastnosti znázorněné v příkladu s kávovarem. Vlastnosti jsou také užitečné při vyvíjení softwarových produktů. Požadavkem může být například kompatibilita s různými operačními systémy. Ve výsledném systému bude mít pak každá vlastnost odlišnou implementaci a na základě poskládání těchto vlastností v jeden celek získáme finální systém. Vlastnosti nám tedy zajišťují variabilitu mezi odlišnými produkty se stejným základem.
+
+Model vlastností znázorňuje závislosti mezi těmito vlastnosti. Vlastnosti v modelu tvoří strom, kde kořenovou vlastností je koncept. Koncept obsahuje další vlastnosti jako své potomky.
+
 \subsection{Typy vlastností}
+
+Jak už bylo řečeno, každý produkt u kterého je požadavek na určitou variabilitu, znovupoužitelnost či rozšiřitelnost obsahuje vlastnosti. Tyto vlastnosti mohou být několika typů. V této části se budeme věnovat základním typům těchto vlastností.
+
+\subsubsection{Povinné vlastnosti}
+Povinné vlastnosti jsou vlastnosti, které výsledný produkt musí obsahovat. Jsou to vlastnosti, na kterých je koncept založen a které jsou zahrnuty v jeho popisu. Povinná vlastnost musí být ve výsledném modelu zahrnuta, pokud je zahrnutý i její rodič. Například náš kávovar bude mít vždy mlýnek na kávu, odkapávač, zásobník zbytků, zásobník vody a další. Bez těchto vlastností se neobejde žádná varianta výsledného produktu. 
+
+\subsubsection{Volitelné vlastnosti}
+Volitelné vlastnosti mohou být zahrnuty v popisu konceptu. Jinými slovy, pokud je zahrnut rodič, volitelná vlastnost může a nemusí být zahrnuta. Pokud rodič volitelné vlastnosti zahrnutý není, nemůže být zahrnuta ani volitelná vlastnost na něm závislá. V příkladě s kávovarem může být touto vlastností například zmíněné nastavitelné množství kávových zrn a množství vody. Tuto vlastnost buď mít kávovar může, nebo nemusí a tvoří tedy další varianty produktu.
+
+\subsubsection{Alternativní vlastnosti}
+Alternativní vlastnosti jsou vlastnosti, kde existuje možnost výběru mezi více vlastnostmi. V kávovaru je takovou vlastností edice, kdy je potřeba si vybrat mezi standart nebo deluxe edicí, ale výsledný produkt nemůže obsahovat obě. Alternativní vlastnosti mohou být volitelné, nebo povinné. Pokud je soubor alternativních vlastností povinný, je třeba si mezi nimi vybrat, ale nelze vybrat žádnou z nich. Pokud jsou alternativní vlastnosti volitelné, je třeba mezi nimi vybrat, nebo nepoužít žádnou z nich.
+
 \subsection{Grafické znázornění}
+Modely vlastností jsou zobrazovány v diagramu vlastností. Diagram vlastností je zakreslován jako stromový graf, kde koncept je kořenovým uzlem a všechny další uzly jsou jeho vlastnostmi. Každý uzel může mít \textit{N} potomků.
+
+\subsubsection{Povinné vlastnosti}
+Povinnou vlastnost v diagramu značíme jednoduchou hranou zakončenou vybarveným kruhem.
+\newline
+\newline
+\textit{ZDE BUDE OBRÁZEK POVINNÝCH VLASTNOSTÍ}
+\newline
+\newline
+Každá instance konceptu \textit{C} má vlastnost \textit{f1} a \textit{f2} a každá co má \textit{f1} má \textit{f3} a \textit{f4}. Z toho vyplývá, že každá instance konceptu \textit{C} má vlastnosti \textit{f3} a \textit{f4}. Můžeme tedy říct, že koncept \textit{C} je popsán sadou vlastností:
+
+\textit{\{C,f1,f2,f3,f4\}}.
+
+\subsubsection{Volitelné vlastnosti}
+Volitelné vlastnosti v diagramu značíme jednoduchou hranou zakončenou prázdným kruhem.
+\newline
+\newline
+\textit{ZDE BUDE OBRÁZEK VOLITELNÝCH VLASTNOSTÍ}
+\newline
+\newline
+Každá instance konceptu může mít vlastost \textit{f1}, vlastnost \textit{f2}, obě, nebo žádnou. Pokud má vlastnost \textit{f1}, může mít také vlastnosti \textit{f3} a \textit{f4}. Koncept můžeme popsat sadou vlastností: 
+\begin{itemize}
+	\item \textit{\{C\}}
+	\item \textit{\{C,f1\}}
+	\item \textit{\{C,f2\}}
+	\item \textit{\{C,f1,f2\}}
+	\item \textit{\{C,f1,f3\}}
+	\item \textit{\{C,f1,f2,f3\}}
+\end{itemize}
+
+\subsubsection{Alternativní vlastnosti}
+Alternativní vlastnost v diagramu značíme obloukem mezi hranami.
+\newline
+\newline
+\textit{ZDE BUDE OBRÁZEK ALTERNATIVNÍCH VLASTNOSTÍ}
+\newline
+\newline
+V instanci jsou znázorněný povinné alternativní vlastnosti. Musíme si tedy v levé větvi vybrat mezi vlastnostmi \textit{f1} a \textit{f2} a na pravé větvi mezi vlastnostmi \textit{f3}, \textit{f4} a \textit{f5}. Koncept můžeme popsat sadou vlastností:
+\begin{itemize}
+	\item \textit{\{C,f1,f3\}}
+	\item \textit{\{C,f1,f4\}}
+	\item \textit{\{C,f1,f5\}}
+	\item \textit{\{C,f2,f3\}}
+	\item \textit{\{C,f2,f4\}}
+	\item \textit{\{C,f2,f5\}}
+\end{itemize}
+
+\subsubsection{Shrnutí}
+Na základě těchto základních typů dokážeme z libovolného konceptu sestavit hotový model vlastností. Díky němu jsme schopni zachytit veškeré varianty finálního produktu. Jsme schopní zjistit co jaká varianta vyžaduje a co musí obsahovat. 
+
+Diagram by krom názvů vlastností a typu závislostí měl obsahovat i informace o vlastnostech. Tyto informace by měly obsahovat důvod, proč je tato vlastnost vyžadována, jak souvisí se zbytkem modelu a veškeré další informace, které mohou být při vývoji užitečné. 
+
+\chapter{Modelovací nástroje}
+
+V této kapitole s e
 
 \bibliographystyle{csplainnatkiv}
 {\raggedright\small
