@@ -1,0 +1,52 @@
+\chapter{Generativní programování}
+Generativní programování je metodika, která odděluje model od implementace. Realizuje se pomocí generátorů. Generátor využívá modelu jako šablony, ze které je generován výsledný kód. Generátory jsou založeny na modelech, které definují sémantiku. Pro generování jsou použity dvě základní metody - kompoziční a transformační. Generátory založené na kompozici se nazývají \textit{kompoziční generátory} a generátory založené na transformaci se nazývají \textit{transformační generátory}.
+
+\section{Kompozice a transformace}
+Existují dvě základní metody generování instance konceptu. Obě dvě si ukážeme na příkladě, kde budeme vytvářet instanci hvězdy z různých komponent. Hvězda je sestavena z modelu vlastností, který obsahuje:
+\begin{itemize}
+	\item počet cípů
+	\item vnitřní poloměr
+	\item vnější poloměr
+	\item úhel popisující naklonění prvního cípu
+\end{itemize}
+Nyní si ukážeme, jak k vytvoření hvězdy přistupují obě dvě metody.
+\newline
+\newline
+ZDE BUDE OBRÁZEK CZARNECKI FIGURE 52
+\newline
+\newline
+
+\subsubsection{Kompozice}
+V kompozičním modelu spojíme několik komponent dohromady, které tak vytvoří požadovaný celek. K tomu, abychom byli schopni generovat různé hvězdy, je potřeba mít sadu konkrétních komponent různých velikostí a tvarů.
+\newline
+\newline
+ZDE BUDE OBRÁZEK CZARNECKI FIGURE 55.
+\newline
+\newline
+Kruh je popsán pouze vnitřním poloměrem, zatímco cípy jsou popsány vnitřním poloměrem, jejich počtem a vnějším poloměrem. K tomu abychom sestavili čtyřcípou hvězdu, která je vidět na obrázku, je potřeba jeden kruh a čtyři cípy vybrané ze sady konkrétních komponent, na základě jejich vlastností.
+\newline
+\newline
+ZDE BUDE OBRÁZEK CZARNECKI FIGURE 53.
+\newline
+\newline
+Efektivnějším způsobem sestavení instance je použití \textit{generativních komponent} místo konkrétních komponent. Generativní komponenta využívá abstraktního popisu komponent a generuje komponentu na základě popisu. Například místo celé sady všech možných kruhů a cípů potřebujeme dvě generativní komponenty, a to generativní kruh a generativní cíp. Generativní kruh má jako parametr vnitřní poloměr a generativní cíp má jako své parametry vnitřní poloměr, vnější poloměr a úhel.
+\newline
+\newline
+ZDE BUDE OBRÁZEK CZARNECKI FIGURE 54
+\newline
+\newline
+Konkrétní komponenty jsou následně vygenerovány a poskládány do požadovaného obrazce.
+
+\subsubsection{Transformace}
+Narozdíl od kompozice nespojujeme jednotlivé komponenty, ale provádíme určitý počet transformací, které vyústí v požadovaný výsledek. Není potřeba mít nadefinovanou sadu komponent, nebo jejich generování, ale je třeba mít nadefinované transformace, které můžeme s instancí provádět. V tomto příkladě jsou to transformace: 
+\begin{itemize}
+	\item přidej 4 cípy
+	\item zvětš vnější poloměr
+	\item otoč o 45 stupňů
+\end{itemize}
+ZDE BUDE OBRÁZEK CZARNECKI FIGURE 53
+
+\subsubsection{Shrnutí}
+I když se transformační generátor zdá být jednodušśí, většina generátorů, které známe, jsou kompoziční. Příkladem takového generátoru může být editor GUI, který na základě grafického editoru, ve kterém poskládáme grafické komponenty dohromady, vygeneruje kód, který je popisuje.
+
+Kompoziční generátor bude použit v této práci. Na základě vytvořené varianty z modelu vlastností bude generován kód jazyka tesa. Komponenty zde budou zaznamenány jako záznamy v souboru formátu XML. Z těchto komponent bude následně vygenerován výsledný kód.

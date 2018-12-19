@@ -92,6 +92,7 @@
 \input{uvod.tex}
 \input{modelovani_vlastnosti.tex}
 \input{modelovaci_nastroje.tex}
+\input{generativni_programovani.tex}
 
 \bibliographystyle{csplainnatkiv}
 {\raggedright\small

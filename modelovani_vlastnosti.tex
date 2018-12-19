@@ -1,6 +1,6 @@
 \chapter{Modelování vlastností}
 
-Účelem této kapitoly je seznámit čtenáře s problematikou modelování vlastností, které je v práci použito jako šablona pro generování zdrojového kódu konfigurátoru a s nástroji které. Modelování vlastností úzce souvisí s pojmem \textit{Doménové inženýrství}, kterému se budeme také krátce věnovat.
+Účelem této kapitoly je seznámit čtenáře s problematikou modelování vlastností, které je v práci použito jako šablona pro generování zdrojového kódu konfigurátoru a s nástroji které modelování vlastností umožňují.
 
 \section{Motivace}
 
@@ -18,7 +18,7 @@ Hlavní motivací je tedy identifikace a zachycení variability, znovupoužiteln
 
 Každý koncept je tvořen z určitých charakteristik. Tyto charakteristiky nazýváme vlastnostmi. Pojem vlastnosti můžeme aplikovat jak na vyráběné produkty, tak na různé vlastnosti systému. Příkladem vlastností u vyráběných produktů mohou být vlastnosti znázorněné v příkladu s kávovarem. Vlastnosti jsou také užitečné při vyvíjení softwarových produktů. Požadavkem může být například kompatibilita s různými operačními systémy. Ve výsledném systému bude mít pak každá vlastnost odlišnou implementaci a na základě poskládání těchto vlastností v jeden celek získáme finální systém. Vlastnosti nám tedy zajišťují variabilitu mezi odlišnými produkty se stejným základem.
 
-Model vlastností znázorňuje závislosti mezi těmito vlastnosti. Vlastnosti v modelu tvoří strom, kde kořenovou vlastností je koncept. Koncept obsahuje další vlastnosti jako své potomky.
+Model vlastností znázorňuje závislosti mezi těmito vlastnostmi. Vlastnosti v modelu tvoří strom, kde kořenovou vlastností je koncept. Koncept obsahuje další vlastnosti jako své potomky.
 
 \subsection{Typy vlastností}
 
@@ -28,10 +28,10 @@ Jak už bylo řečeno, každý produkt u kterého je požadavek na určitou vari
 Povinné vlastnosti jsou vlastnosti, které výsledný produkt musí obsahovat. Jsou to vlastnosti, na kterých je koncept založen a které jsou zahrnuty v jeho popisu. Povinná vlastnost musí být ve výsledném modelu zahrnuta, pokud je zahrnutý i její rodič. Například náš kávovar bude mít vždy mlýnek na kávu, odkapávač, zásobník zbytků, zásobník vody a další. Bez těchto vlastností se neobejde žádná varianta výsledného produktu. 
 
 \subsubsection{Volitelné vlastnosti}
-Volitelné vlastnosti mohou být zahrnuty v popisu konceptu. Jinými slovy, pokud je zahrnut rodič, volitelná vlastnost může a nemusí být zahrnuta. Pokud rodič volitelné vlastnosti zahrnutý není, nemůže být zahrnuta ani volitelná vlastnost na něm závislá. V příkladě s kávovarem může být touto vlastností například zmíněné nastavitelné množství kávových zrn a množství vody. Tuto vlastnost buď mít kávovar může, nebo nemusí a tvoří tedy další varianty produktu.
+Volitelné vlastnosti mohou být zahrnuty v popisu konceptu. Jinými slovy, pokud je zahrnut rodič, volitelná vlastnost může a nemusí být zahrnuta. Pokud rodič volitelné vlastnosti zahrnutý není, nemůže být zahrnuta ani volitelná vlastnost na něm závislá. V příkladě s kávovarem může být touto vlastností například zmíněné nastavitelné množství kávových zrn a množství vody. Tuto vlastnost mít kávovar může,ale zároveň nemusí a tvoří tedy další varianty produktu.
 
 \subsubsection{Alternativní vlastnosti}
-Alternativní vlastnosti jsou vlastnosti, kde existuje možnost výběru mezi více vlastnostmi. V kávovaru je takovou vlastností edice, kdy je potřeba si vybrat mezi standart nebo deluxe edicí, ale výsledný produkt nemůže obsahovat obě. Alternativní vlastnosti mohou být volitelné, nebo povinné. Pokud je soubor alternativních vlastností povinný, je třeba si mezi nimi vybrat, ale nelze vybrat žádnou z nich. Pokud jsou alternativní vlastnosti volitelné, je třeba mezi nimi vybrat, nebo nepoužít žádnou z nich.
+Alternativní vlastnosti jsou vlastnosti, kde existuje možnost výběru mezi více vlastnostmi. V kávovaru je takovou vlastností edice, kdy je potřeba si vybrat mezi standart nebo deluxe edicí, ale výsledný produkt nemůže obsahovat obě. Alternativní vlastnosti mohou být volitelné, nebo povinné. Pokud je soubor alternativních vlastností povinný, je třeba si mezi nimi vybrat, ale nelze nevybrat žádnou z nich. Pokud jsou alternativní vlastnosti volitelné, je třeba mezi nimi vybrat, nebo nepoužít žádnou z nich.
 
 \subsection{Grafické znázornění}
 Modely vlastností jsou zobrazovány v diagramu vlastností. Diagram vlastností je zakreslován jako stromový graf, kde koncept je kořenovým uzlem a všechny další uzly jsou jeho vlastnostmi. Každý uzel může mít \textit{N} potomků.
@@ -54,7 +54,7 @@ Volitelné vlastnosti v diagramu značíme jednoduchou hranou zakončenou prázd
 \textit{ZDE BUDE OBRÁZEK VOLITELNÝCH VLASTNOSTÍ}
 \newline
 \newline
-Každá instance konceptu může mít vlastost \textit{f1}, vlastnost \textit{f2}, obě, nebo žádnou. Pokud má vlastnost \textit{f1}, může mít také vlastnosti \textit{f3} a \textit{f4}. Koncept můžeme popsat sadou vlastností: 
+Každá instance konceptu může mít vlastnost \textit{f1}, vlastnost \textit{f2}, obě, nebo žádnou. Pokud má vlastnost \textit{f1}, může mít také vlastnosti \textit{f3} a \textit{f4}. Koncept můžeme popsat sadou vlastností: 
 \begin{itemize}
 	\item \textit{\{C\}}
 	\item \textit{\{C,f1\}}
