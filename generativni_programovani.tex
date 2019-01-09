@@ -1,8 +1,15 @@
 \chapter{Generativní programování}
-Generativní programování je metodika, která odděluje model od implementace. Realizuje se pomocí generátorů. Generátor využívá modelu jako šablony, ze které je generován výsledný kód. Generátory jsou založeny na modelech, které definují sémantiku. Pro generování jsou použity dvě základní metody - kompoziční a transformační. Generátory založené na kompozici se nazývají \textit{kompoziční generátory} a generátory založené na transformaci se nazývají \textit{transformační generátory}.
+Generativní programování je druh programování, který odděluje model od implementace. Realizuje se pomocí generátorů. Generátor využívá modelu jako šablony, ze které je generován výsledný kód. Generátory jsou založeny na modelech, které definují sémantiku. 
 
-\section{Kompozice a transformace}
-Existují dvě základní metody generování instance konceptu. Obě dvě si ukážeme na příkladě, kde budeme vytvářet instanci hvězdy z různých komponent. Hvězda je sestavena z modelu vlastností, který obsahuje:
+\section{Motivace}
+Motivace pro generativní programování vznikla současně se vznikem počítačů. Stroje nerozumí naší řeči a jejich funkce jsou pouhými elektrickými signály. Vznikla potřeba vymyslet způsob, kterým budeme procesoru předávat informace o tom, co se po něm vyžaduje. Psaní těchto instrukcí pomocí nul a jedniček je ale nepřehledné a pro člověka nesrozumitelné. Vznikly tedy první sady instrukcí procesorů, které byli pro člověka čitelné. Tyto instrukce byly překládány přímo do strojového kódu, podle kterého procesor pracoval. Tento překlad je právě generováním kódu. Instrukce jsou využity jako šablona a překladač generuje strojový kód na základě těchto instrukcí.
+
+S rozmachem programování vznikl požadavek na vyšší abstrakci tak, aby se instrukce co nejvíc podobali lidské řeči. To vedlo ke vzniku velkého množství programovacích jazyků, překladačů a interpreterů, které tyto komplexnější instrukce překládají na strojový kód. Překladače jsou tedy generátory, které na základě šablony generují strojový kód. 
+
+Generativní programování je o návrhu a implementaci softwarových modulů, které je možné zkombinovat a generovat tak specializované a rozsáhlé systémy splňující specifické požadavky [Cza98]. Cílem je zmenšit mezeru zdrojovým kódem a konceptem, dosáhnout vysoké znovupoužitelnosti a adaptability software a zjednodušit správu velkého množství variant komponenty a zvýšit efektivitu [CEG98].
+
+\section{Generátory}
+Podle [Cza98] jsou pro generování použity dvě základní metody - \textit{kompoziční} a \textit{transformační}. Generátory založené na kompozici se nazývají \textit{kompoziční generátory} a generátory založené na transformaci se nazývají \textit{transformační generátory}. Oba dva typy generátorů si ukážeme na příkladě, kde budeme vytvářet instanci hvězdy z různých komponent. Hvězda je sestavena z modelu vlastností, který obsahuje:
 \begin{itemize}
 	\item počet cípů
 	\item vnitřní poloměr
@@ -16,7 +23,7 @@ ZDE BUDE OBRÁZEK CZARNECKI FIGURE 52
 \newline
 \newline
 
-\subsubsection{Kompozice}
+\subsection{Kompozice}
 V kompozičním modelu spojíme několik komponent dohromady, které tak vytvoří požadovaný celek. K tomu, abychom byli schopni generovat různé hvězdy, je potřeba mít sadu konkrétních komponent různých velikostí a tvarů.
 \newline
 \newline
@@ -37,7 +44,7 @@ ZDE BUDE OBRÁZEK CZARNECKI FIGURE 54
 \newline
 Konkrétní komponenty jsou následně vygenerovány a poskládány do požadovaného obrazce.
 
-\subsubsection{Transformace}
+\subsection{Transformace}
 Narozdíl od kompozice nespojujeme jednotlivé komponenty, ale provádíme určitý počet transformací, které vyústí v požadovaný výsledek. Není potřeba mít nadefinovanou sadu komponent, nebo jejich generování, ale je třeba mít nadefinované transformace, které můžeme s instancí provádět. V tomto příkladě jsou to transformace: 
 \begin{itemize}
 	\item přidej 4 cípy
@@ -46,7 +53,9 @@ Narozdíl od kompozice nespojujeme jednotlivé komponenty, ale provádíme urči
 \end{itemize}
 ZDE BUDE OBRÁZEK CZARNECKI FIGURE 53
 
-\subsubsection{Shrnutí}
+\subsection{Shrnutí}
 I když se transformační generátor zdá být jednodušśí, většina generátorů, které známe, jsou kompoziční. Příkladem takového generátoru může být editor GUI, který na základě grafického editoru, ve kterém poskládáme grafické komponenty dohromady, vygeneruje kód, který je popisuje.
 
 Kompoziční generátor bude použit v této práci. Na základě vytvořené varianty z modelu vlastností bude generován kód jazyka tesa. Komponenty zde budou zaznamenány jako záznamy v souboru formátu XML. Z těchto komponent bude následně vygenerován výsledný kód.
+
+

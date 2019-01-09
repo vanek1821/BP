@@ -2,90 +2,94 @@
 
 V této kapitole se budeme zabývat nástroji, které umožňují modelování vlastností a které by bylo vhodné použít pro účely práce. Cílem je ukázat, jaké modelovací nástroje existují, k čemu se používají a zachytit rozsah jejich funkcí. Bude vysvětleno, jaké mají nástroje výhody a nevýhody a odůvodnění výběru nástroje.
 
-\subsection{pure::variants}
+\section{pure::variants}
 
 Pure::variants je jeden z mála komerčně využívaných modelovacích nástrojů od společnosti pure-systems. Není zaměřen pouze na modelování vlastností, ale svou funkcionalitou se snaží pokrýt všechny fáze vývoje software. Samotný software je plug-inem do vývojového prostředí Eclipse. Umožňuje práci s několika modely a pro každý z těchto modelů má vlastní editor.
 
-Hlavním modelem je \textit{Feature Model} nebo-li model vlastností. Software zobrazuje model vastností ve stromové architektuře. Umožňuje vytvoření čtyř různých závislostí: povinné, volitelné, alternativní a slučitelné. Umožňuje také přidávat závislosti vlastností napříč modelem. Například pokud bude ve finální variantě vybrána vlastnost, software automaticky vyber povinné vlastnosti, které jsou na ní závislé a nedovolí vytvořit variantu bez těchto vlastností. 
+Hlavním modelem je \textit{Feature Model} nebo-li model vlastností. Software zobrazuje model vastností ve stromové architektuře. Umožňuje vytvoření čtyř různých závislostí: povinné, volitelné, alternativní a slučitelné. Umožňuje také do modelu zanést pravidla o omezeních, které jsou nezbytné při výsledné konfiguraci. 
 
 Dalšími modely jsou \textit{Family model} nebo-li model rodiny produktů. Tento model zobrazuje elementy této rodiny a dokáže na ně namapovat vlastnosti. Dále \textit{Variant description model}, který vlastnosti dokáže konfigurovat. Posledním modelem je \textit{Variant result model}, který narozdíl od předchozích jako jediný nemá vlastní editor. Tento model popisuje konkrétní výstupní variantu produktu, její popis a informace pro její sestavení.
 
-Pro naše účely budeme využívat \textit{Feature model}, který dokáže jednoduchým způsobem sestavit výslednou variantu z vytvořených vlastností pomocí zaškrtávání. 
+V našem případě využijeme feature model jako zobrazení závislostí mezi částmi konfigurace. Na základě tohoto feature modelu budeme schopni vytvořit libovolné množství variant description modelů, ze kterých bude generován výsledný kód. 
 \newline
 \newline
 ZDE BUDE OBRÁZEK PURE::VARIANTS
 \newline
 \newline
 
-\subsubsection{Výhody}
+\section{Xfeature}
 
-Hlavní výhodou je uživatelsky přívětivé ovládání. Vytvoření modelu je intuitivní a jednoduché. Vlastnosti se přidávají pomocí kontextového menu a u každé nové vlastnosti je uživatel vyzván k popisu této vlastnosti. Z výsledného stromu se dá jednoduše vytvořit finální varianta a software si sám hlídá, zda jsou dodržena veškerá pravidla, která jsou v modelu zanesena.
-
-Další velkou výhodou, která je pro tuto práci klíčová, je možnost importu a exportu modelu a výsledné varianty pomocí souborů ve formátech \textit{CSV}, \textit{XML}, \textit{HTML} a \textit{DOT}. 
-
-\subsubsection{Nevýhody}
-
-Hlavní nevýhodou tohoto software, je dle mého názoru vysoká cena za licenci. Oficiální cena není ani na oficiálních stránkách produktu uvedena a zákazník se jí dozví přímým e-mailovým dotazem na společnost. Naše společnost zakoupila několik licencí na tento software a cena jedné licence se pohybovala okolo 10 000 eur při čemž je potřeba zaplatit 20\% každý rok za prodloužení licence. 
-
-Další nevýhodou může být přílišná komplexnost nástroje. Nástroj obsahuje opravdu velké množství funkcí a plně využít jeho potenciál může být náročné. 
-
-\subsubsection{Shrnutí}
-Nástroj Pure::variants je zástupcem komerčně využívaných nástrojů. Tento nástroj bude v práci využit k zachycení šablony díky jeho možnosti importu a exportu. Je pravděpodobobné, že pro účel ke kterému bude nástroj využíván by byl jiný nástroj vhodnější, ale jelikož firma ZF vlastní několik licencí a jedna z nich mi byla k účelům bakalářské práce poskytnuta, bude využit tento nástroj.
-
-\subsection{Xfeature}
-
-Nástroj Xfeature je dalším plug-inem do vývojového prostředí Eclipse, který poskytuje grafické uživatelské rozhraní pro práci s modely vlastností. Modely vlastností zde vyjadřují model rodiny produktů a modely aplikací. K modelu vlastností přistupují jako k meta-modelu vlastností. Model vlastností i jeho konfigurace jsou zde popsány pomocí XML dokumentu, který odpovídá určitému XML schématu (meta-modelu). Uživatel je schopen vytvořit vlastní XML schéma, které však musí odpovídat jeho meta-modelu. Nové vlastnosti jdou tedy tvořit pouze v souladu s meta-modelem. Tvorba modelů vlastností je zde prováděna pomocí kontextového menu. Umožňuje tvorbu povinných, volitelných i alternativních vlastností.
+Nástroj \textit{Xfeature} je dalším plug-inem do vývojového prostředí Eclipse, který poskytuje grafické uživatelské rozhraní pro práci s modely vlastností. Modely vlastností zde vyjadřují model rodiny produktů a modely aplikací. K modelu vlastností přistupují jako k meta-modelu vlastností. Model vlastností i jeho konfigurace jsou zde popsány pomocí XML dokumentu, který odpovídá určitému XML schématu (meta-modelu). Uživatel je schopen vytvořit vlastní XML schéma, které však musí odpovídat jeho meta-modelu. Nové vlastnosti jdou tedy tvořit pouze v souladu s meta-modelem. Tvorba modelů vlastností je zde prováděna pomocí kontextového menu. Umožňuje tvorbu povinných, volitelných i alternativních vlastností.
 \newline
 \newline
 ZDE BUDE OBRÁZEK XFEATURE
 \newline
 \newline
 
-\subsubsection{Výhody}
-Výhodou nástroje Xfeature je hlavně jeho přístup. Jelikož k modelům přistupuje pomocí XML, které odpovídá jistému XML schématu, je jednoduchá jeho validace. Zároveň nástroj hlídá, zda nejsou pravidla porušena. Umožňuje uživateli vytvořit si vlastní meta-model dle vlastních potřeb.
 
-\subsubsection{Nevýhody}
-Hlavní nedostatkem nástroje je odlišení grafického ztvárnění diagramů, které neodpovídá žádnému jinému ztvárnění. Tato změna může mít za následek zmatení uživatele, který je na práci s modely vlastností zvyklí a je potřeba adaptace na grafické znázornění v nástroji Xfeature. Dalším nedostatkem může být editace modelů přes kontextové menu, které může být matoucí a uživatele může značně zpomalit.
+\section{Feature Modeling Plug-in}
+Nástroj \textit{Feature Modeling Plug-in} je také zásuvný modul do vývojového prostředí Eclipse. Umožňuje vytváření, editaci i výslednou konfiguraci vlastností s kardinalitou a atributy podle [Cza05]. Tento nástroj se již dále nevyvíjí.
 
-\subsubsection{Shrnutí}
-Ačkoliv nástroj graficky reprezentuje vnitřně uložené struktury ve formátu XML, které by bylo možné do nástroje importovat, neumožňuje vytvoření jednotlivé varianty a neumožňuje její export. Z tohoto důvodu nemůže být pro práci využit. Může však být užitečným nástrojem při vývoji software a může mít široké využití.
+Jako ve většině nástrojů je model vlastností zobrazován ve stromové struktuře. Velkou výhodou je možnost rozdělit celý model do menších celků, na které se dá odkazovat a celý model tím zpřehlednit. Po grafické stránce se velmi podobá nástroji pure::variants. Ovládání probíhá skrz kontextové menu a je intuitivní a přehledné. 
 
-\subsection{Vlastní nástroj}
+Nástroj neumožňuje vytváření samostatných modelů pro výslednou konfiguraci. Tato konfigurace probíhá na stejném stromě jako editace modelu vlastností pomocí úprav jeho částí, což může celý model znepřehlednit.
+
+\section{Software Product Lines Online Tools}
+Nástroj \textit{Software Product Lines Online Tools} je nástroj implementovaný jako webová aplikace. Aplikace je zdarma a volně k použití. Umožňuje vytvoření a editaci modelu vlastností pomocí grafického rozhraní. Lze zde přidávat povinné, volitelné vlastnosti i OR a XOR skupiny. Editor také umožňuje vytvoření globálních omezení. 
+
+Nástroj umí během konfigurace hlídat dodržení pravidel včetně omezení a dokáže konfiguraci opravovat na základě vytvořeného modelu vlastností.
+
+Model vlastností je ukládán do databáze a je možné ho sdílet s ostatními uživateli. Konfiguraci následně umí exportovat do souboru formátu CSV nebo XML.
+
+\section{Vlastní nástroj}
 
 Další možností využití nástrojů pro modelování vlastností je vytvořit nástroj vlastní. Jelikož je zadání velmi specifické, bylo by možné vytvořit vlastní nástroj, který bude umět pracovat se specifickými daty. Požadavky na takový nástroj by byly:
 \begin{itemize}
-	\item graficky zobrazit model vlastností z gramatiky psané v Xtextu.
-	\item umožnit vytvoření varianty konfigurace pomocí zaškrtávání vlastností
-	\item validace vytvořené varianty
+	\item graficky zobrazit model vlastností z gramatiky psané v Xtextu
+	\item umožnit vytvoření modelu variant z vytvořeného modelu vlastností
+	\item validace vytvořené varianty na základě typů vlastností včetně globálních omezení
+	\item export a import modelů variant, kvůli sdílení mezi uživateli
 	\item vygenerování šablony v jazyce tesa
 \end{itemize}
-nástroj by mohl být opět plug-inem do vývojového prostředí Eclipse, nebo samostatnou aplikací. 
+Nástroj by nemusel umět editaci modelu vlastností, jelikož by měl pouze zobrazovat závislosti zavedené v gramatice.
 
-\subsubsection{Výhody}
-Největší výhodou vytvoření vlastního nástroje by bylo specifické řešení všech požadavků. Další výhodou by byl malý rozsah funkčí aplikace, která by nemusela umět model vlastností tvořit ani žádným jiným způsobem upravovat. Model vlastností by byl pouze grafickým znázorněním popsané gramatiky. 
+\subsubsection{Odhad času vývoje}
+Vývoj takového nástroje musí projít všemi fázemi vývoje software. Těmito fázemi jsou analýza, návrh implementace, implementace, testování nástroje a validace všech předešlých fází. Během vývoje by docházelo k několika iteracím, kde by se na základě problémů v pozdějších fázích muselo vracet k dřívějším fázím a modifikovat je tak, aby výsledný nástroj souhlasil se všemi požadavky.
 
-\subsubsection{Nevýhody}
-Hlavní nevýhodou tvorby vlastního nástroje by byl čas strávený na jejím vývoji. Ačkoliv by použití bylo velmi specifické, graficky generovat diagram by nebyl jednoduchý úkol a implementace takového problému by zabralo spoustu času. Další nevýhodou by byla jeho jednoúčelovost. Takový nástroj by se dal použít pouze pro tento specifický problém a nedokázal by řešit žádné jiné scénáře.
+Analýza by zahrnovala sběr požadavků od koncových uživatelů, jejich vyhodnocení a seznámení s technologiemi potřebnými pro vývoj, jemiž jsou gramatika psaná v Xtextu, seznámení s konfigurátorem TesaTK, seznámení se s technologií modelování vlastností a její konfigurace. Dále by bylo třeba zvážit, jaký programovací jazyk by byl pro vývoj nejvhodnější a výběr odůvodnit. Odhadovaný čas analýzy by v takovém případě byl v řádu 80-120 hodin, tedy 10-15 pracovních dní. 
 
-\subsubsection{Shrnutí}
-Vytvořit vlastní nástroj by bylo možné a pravděpodobně i levnější než použití nástroje pure::variants, avšak časová náročnot vývoje takového nástroje by byla nad rámec času, který je na práci k dispozici. Zároveň by vývoj takového nástroje musel procházet určitými fázemi, které by se ve společnosti mohli značně protáhnout a čas, který by byl potřeba k dokončení takového nástroje je neodhadnutelný.
+Během návrhu implementace by bylo potřeba navrhnout parser, který dokáže z gramatiky v Xtextu dynamicky tvořit model vlastností, tedy namapovat typy vlastností na syntaxi jazyka Xtext. Dále by bylo potřeba vybrat vhodné prostředky pro jejich zobrazení, což úzce souvisí s výběrem programovacího jazyka a frameworku, který by se využil. Na základě objektové analýzy by bylo potřeba navrhnout strukturu aplikace. Odhadovaný čas návrhu implementace by se mohl opět pohybovat v řádu 80-10 hodin, tedy 10-15 pracovnách dní.
 
+Implementace by zahrnovala vytvořit parser z gramatiky, celé uživatelské prostředí včetně zobrazení modelu vlastností, generátor konfigurace variant jako šablon v jazyce Tesa a export modelů variant. Dále by bylo třeba vypořádat se se všemi problémy, které by během implementace mohli nastat. Odhadovaný čas implemetace by se mohl pohybovat v rozmezí 1200-2000 hodin, tedy 150-250 pracovních dní. 
 
+Během testování by bylo třeba napsat jednotkové testy a otestovat tak celou aplikaci a opravit veškeré chyby, které by se při implementaci mohli objevit. Odhadovaný čas testování a oprav by se mohl pohybovat v rozmezí 800-1000 hodin, tedy 100-125 dní.
 
+Pokud by všechny předešlé fáze dopadli úspěšně proběhla by validace všech fází a nástroj by se mohl začít používat. Celkový odhadovaný čas strávený vývojem této aplikace by se tak pohyboval okolo 2160-3220 hodin, tedy 270-400 dní. Pokud odhadneme cenu jedné programátorské hodiny na 1000kč, dostaneme odhadovanou cenu nástroje, která by činila 2,16-3,22 milionu korun. Za předpokladu, že by se na práci podílelo okolo 2-3 zaměstnanců, vývoj by trval zhruba 120 dní, tedy 6 měsíců. Důležité je si uvědomit, že vývoj by mohl probíhat v několika iteracích a časová náročnost by se mohla zvýšit i o 100\% nebo více.
 
+\section{Výběr}
+V této části bude zhodnocen výběr nástroje, který bude v práci využit na základě ceny a funkcí, které jednotlivé nástroje nabízejí.
 
+\subsection{Cena}
+Cena je důležitým faktorem při výběru nástroje. Pure::variants je komerčně využívaný nástroj s velkým množstvím funkcí a podporou od svého vydavatele. To z něj činí nástroj s vysokou cenou. Cena jedné licence je 10 000 eur. Tuto licenci je třeba každý rok prodloužit. Cena tohoto prodloužení je 20\% z pořizovací ceny, tudíž 2000 eur. Cenu za vlastní nástroj jsme odhadli zhruba na 3 miliony korun. Tato cena se však může lišit v milionech korun od výsledné ceny, která by byla třeba na vývoj. Pokud budeme předpokládat, že nástroj bude využívat 5 lidí a bylo by tedy třeba zakoupit 5 licencí na nástroj pure::variants, návratovost tvorby vlastního nástroje by se pohybovala kolem osmi let.
 
+Ostatní zmíněné nástroje jsou volně dostupné a jsou zdarma.
 
+\subsection{Funkce}
+V této části se budeme zabývat funkcemi, které jednotlivé nástroje nabízejí a jak tyto funkce souvisejí s účely bakalářské práce
 
+\subsubsection{pure::variants}
+Nástroj pure::variants splňuje veškeré požadavky na nástroj. Je možné v něm vytvořit model vlastností pomocí importu správně strukturovaných souborů ve formátu CSV. Z tohoto modelu lze vytvořit konfigurace, které jsou znázorněny v samostatném stromu, což zaručuje přehlednost oproti jiným nástrojům, kde se konfigurace tvoří přímo ve stromě modelu vlastností. Tyto konfigurace lze následně exportovat do souborů ve formátech XML a CSV. Nástroj také sám hlídá dodržení závislostí při tvorbě konfigurace.
 
+\subsubsection{XFeature}
+Nástroj XFeature umožňuje jednoduchou validaci konfigurací díky své reprezentaci vlastností pomocí XML. XFeature neumožňuje import ani export dat. Tato data by se ale dali zpracovat, díky jeho reprezentaci. Grafické zobrazení vlastností se liší od klasických grafických znázornění popsaných v [Cza98], což může být pro uživatele matoucí. Při velkém množství vlastností se také může strom stát nepřehledným.
 
+\subsubsection{Feature Modeling Plug-in}
+Nástroj Feature Modleing Plug-in umožňuje import a export modelu vlastností ve formátu XML. Umožňuje validaci tvořených konfigurací. Tyto konfigurace se však tvoří přímo ve stromě modelu vlastností, což může být nepřehledné. 
 
+\subsubsection{Software Producl Lines Online Tools}
+Nástroj Software Product Lines Online Tools dokáže na základě modelu vlastností tvořit a validovat konfigurace exportovatelné do souborů formátu CSV a XML. Velkým nedostatkem je však absence možnosti importu modelu vlastností. Model vlastností se dá importovat pouze z existující databáze uložené na stránkách nástroje.
 
+\section{Shrnutí}
+Pokud srovnáme všechny klady a zápory dostupných nástrojů, zjistíme, že pro účely bakalářské práce by byla využitelná většina z nich. Některé mají ovšem nedostatky, kvůli kterým nebudou použity. Největším nedostatkem je absence importu modelu vlastností v nástroji Software Product Lines Online Tools. Tento nedostatek tento nástoj vylučuje. Absence importu a exportu dat v nástroji XFeature je také problémem, který by se však dal obejít díky reprezentaci vlastností jako XML. Grafické znázornění vlastností však není příliš přehledné pro větší množství vlastností a je tudíž také nevhodný. Dalším nástrojem by mohl být Feature Modeling Plug-in, který podporuje většinu požadavků na nástroj, avšak tvoření konfigurací přímo ve stromě, ve kterém je zobrazován model vlastností, je nepřehledné a zároveň tvorba více konfigurací může být složitá. Všechny tyto problémy nemá nástroj pure::variants. Jediným nedostatkem tohoto nástroje je jeho vysoká cena. Pro splnění všech požadavků by bylo tedy možné vytvořit nástroj vlastní. Jeho vývoj by však delší a dražší, než používání nástroje pure::variants po dobu deseti let.
 
-
-
-
-
-
-
-
+Z těchto důvodů je pure::variants nejvhodnějším nástrojem a bude použit pro potřeby bakalářské práce.
