@@ -1,0 +1,225 @@
+\chapter{Modelovací nástroje}
+
+V této kapitole se budeme zabývat nástroji, které umožňují modelování vlastností a které by bylo vhodné použít pro účely práce. Cílem je ukázat, jaké modelovací nástroje existují, k čemu se používají a zachytit rozsah jejich funkcí. Bude vysvětleno, jaké mají nástroje výhody a nevýhody a odůvodnění výběru nástroje.
+
+\section{pure::variants}
+
+Pure::variants je jeden z mála komerčně využívaných modelovacích nástrojů od společnosti pure-systems. Není zaměřen pouze na modelování vlastností, ale svou funkcionalitou se snaží pokrýt všechny fáze vývoje software. Samotný software je plug-inem do vývojového prostředí Eclipse. Umožňuje práci s několika modely a pro každý z těchto modelů má vlastní editor.
+
+Hlavním modelem je \textit{Feature Model} nebo-li model vlastností. Software zobrazuje model vastností ve stromové architektuře. Umožňuje vytvoření čtyř různých závislostí: povinné, volitelné, alternativní a slučitelné. Umožňuje také do modelu zanést pravidla o omezeních, které jsou nezbytné při výsledné konfiguraci. 
+
+Dalšími modely jsou \textit{Family model} nebo-li model rodiny produktů. Tento model zobrazuje elementy této rodiny a dokáže na ně namapovat vlastnosti. Dále \textit{Variant description model}, který vlastnosti dokáže konfigurovat. Posledním modelem je \textit{Variant result model}, který narozdíl od předchozích jako jediný nemá vlastní editor. Tento model popisuje konkrétní výstupní variantu produktu, její popis a informace pro její sestavení.
+
+V našem případě využijeme feature model jako zobrazení závislostí mezi částmi konfigurace. Na základě tohoto feature modelu budeme schopni vytvořit libovolné množství variant description modelů, ze kterých bude generován výsledný kód. 
+
+\section{Xfeature}
+
+Nástroj \textit{Xfeature} je dalším plug-inem do vývojového prostředí Eclipse, který poskytuje grafické uživatelské rozhraní pro práci s modely vlastností. Modely vlastností zde vyjadřují model rodiny produktů a modely aplikací. K modelu vlastností přistupují jako k meta-modelu vlastností. Model vlastností i jeho konfigurace jsou zde popsány pomocí XML dokumentu, který odpovídá určitému XML schématu (meta-modelu). Uživatel je schopen vytvořit vlastní XML schéma, které však musí odpovídat jeho meta-modelu. Nové vlastnosti jdou tedy tvořit pouze v souladu s meta-modelem.
+
+Tvorba modelů vlastností je zde prováděna pomocí kontextového menu. Umožňuje tvorbu povinných, volitelných i alternativních vlastností. Dle autorů \cite{Pas05} nástroj také umožňuje zavedení globálních omezení. Autoři také zavádí tzv. \textit{podmínková omezení} (z angl. \textit{Conditional Constraints}), skrz které je možné zavést různé podmínky a na jejich základě aplikovat tato omezení. 
+
+Během tvorby nebo editace přes uživatelské rozhraní je model současně kontrolován a uživateli jsou nabízeny všechny validní rozšíření stávajícího modelu, což vede k přehlednému a rychlému rozšiřování modelu.
+
+Autoři \cite{Pas05} sami uvádějí několik problému s tímto nástrojem. Jedním z nich je manipulace s velkými komplexními modely, které se může stát nepřehledným. Dalším problémem, který uvádějí, je absence uložení stávající relace. Pokud chce uživatel relaci přerušit a pokračovat jindy, je nutné využít tzv. \textit{model pro uloženi} (z angl. \textit{save model}).
+
+\section{Feature Modeling Plug-in}
+Nástroj \textit{Feature Modeling Plug-in} (FMP) je také zásuvným modulem do vývojového prostředí Eclipse. Umožňuje vytváření, editaci i výslednou konfiguraci vlastností s kardinalitou a atributy podle \cite{Czarneckia05}. Tento nástroj se již dále nevyvíjí.
+
+Dle \cite{Czarneckib05} nástroj umožňuje pomocí kontextového menu klonovat vlastnosti, jejichž horní hranice kardinality je větší než jedna. Autoři \cite{Ant04} také popisují schopnosti nástroje vyplnit omezení mezi vlastnostmi. 
+
+Jako ve většině nástrojů je model vlastností zobrazován ve stromové struktuře. Velkou výhodou je možnost rozdělit celý model do menších celků, na které se dá odkazovat a celý model tím zpřehlednit. Dle \cite{Ant04} je ale možnost sbalení a rozbalování jednotlivých skupin vlastností natolik užitečné a přehledné, že referencování jiných modelů není potřeba. Názvy featur je také možné měnit přímo ve stromě a není nutné otevírat kontextové menu. Po grafické stránce se velmi podobá nástroji pure::variants. Ovládání probíhá skrz kontextové menu a je intuitivní a přehledné. Nástroj se dá také ovládat pouze klávesnicí.  
+
+Nástroj neumožňuje vytváření samostatných modelů pro výslednou konfiguraci. Tato konfigurace probíhá na stejném stromě jako editace modelu vlastností pomocí úprav jeho částí, což může celý model znepřehlednit.
+
+\section{Software Product Lines Online Tools}
+Nástroj \textit{Software Product Lines Online Tools} (SPLOT) je nástroj implementovaný jako webová aplikace. Aplikace je zdarma a volně k použití. Umožňuje vytvoření a editaci modelu vlastností pomocí grafického rozhraní. Lze zde přidávat povinné, volitelné vlastnosti i OR a XOR skupiny. Editor také umožňuje vytvoření globálních omezení. Model vlastností je ukládán do databáze a je možné ho sdílet s ostatními uživateli. Konfiguraci následně umí exportovat do souboru formátu CSV nebo XML.
+
+Tvorba konfigurace z modelu vlastností je tvořena v samostatném okně. V tomto okně je vidět strom modelů vlastností a konfigurace jde tvořit dvěma způsoby. Jedním způsobem je ze stromu vybírat vlastnosti, které chceme ve výsledné konfiguraci, pomocí klikání. Druhým způsobem je nechat si automaticky vyplnit celou konfiguraci ze všech možných vlastností a poté vlastnosti odebírat. Nástroj umí během tvorby konfigurace hlídat dodržení pravidel včetně omezení a dokáže konfiguraci opravovat na základě vytvořeného modelu vlastností. 
+
+Zdrojové kódy nástroje jsou již od jeho vytvoření volně dostupné na \href{https://github.com/marcilio/splot}{GitHubu}, kde jej můžou vývojáři volně zkoumat a vylepšovat. Nástroj také umožňuje stahovat a nahlížet do jiných modelů vlastností, které vytvořili ostatní uživatelé. Tyto modely se nacházejí v repozitáři, který obsahuje stovky různých modelů, které uživatelé vytvořili.
+
+
+
+\section{Vlastní nástroj}
+
+Další možností využití nástrojů pro modelování vlastností je vytvořit nástroj vlastní. Jelikož je zadání velmi specifické, bylo by možné vytvořit vlastní nástroj, který bude umět pracovat se specifickými daty. Požadavky na takový nástroj by byly:
+\begin{itemize}
+	\item graficky zobrazit model vlastností z gramatiky psané v Xtextu
+	\item umožnit vytvoření modelu variant z vytvořeného modelu vlastností
+	\item validace vytvořené varianty na základě typů vlastností včetně globálních omezení
+	\item export a import modelů variant, kvůli sdílení mezi uživateli
+	\item vygenerování šablony v jazyce tesa
+\end{itemize}
+Nástroj by nemusel umět editaci modelu vlastností, jelikož by měl pouze zobrazovat závislosti zavedené v gramatice.
+
+\subsubsection{Odhad času vývoje}
+Vývoj takového nástroje musí projít všemi fázemi vývoje software. Těmito fázemi jsou analýza, návrh implementace, implementace, testování nástroje a validace všech předešlých fází. Během vývoje by docházelo k několika iteracím, kde by se na základě problémů v pozdějších fázích muselo vracet k dřívějším fázím a modifikovat je tak, aby výsledný nástroj souhlasil se všemi požadavky.
+
+\begin{table}[H]
+\centering
+\setlength{\extrarowheight}{0pt}
+\addtolength{\extrarowheight}{\aboverulesep}
+\addtolength{\extrarowheight}{\belowrulesep}
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\begin{tabular}{|l|l|c|} 
+\toprule
+\rowcolor[rgb]{0.937,0.937,0.937} \textbf{Fáze}  & \textbf{Část}               & \textbf{Odhadovaný čas [hod]}   \\ 
+\hline
+Analýza                                          & Specifikace                 & 16                              \\ 
+\hline
+                                                 & Model vlastností            & 40                              \\ 
+\hline
+                                                 & TesaTK                      & 24                              \\ 
+\hline
+                                                 & Xtext                       & 40                              \\ 
+\hline
+Návrh Implemetnace                               & Jádro                       & 40                              \\ 
+\hline
+                                                 & GUI                         & 16                              \\ 
+\hline
+                                                 & Parser                      & 16                              \\ 
+\hline
+Implementace                                     & Struktury modelu vlastností & 40                              \\ 
+\hline
+                                                 & Závistlosti vlastností      & 120                             \\ 
+\hline
+                                                 & GUI                         & 100                             \\ 
+\hline
+                                                 & navázání GUI na struktury   & 60                              \\ 
+\hline
+                                                 & Parser Xtext – nástroj      & 120                             \\ 
+\hline
+                                                 & Generátor nástroj – TesaTK  & 120                             \\ 
+\hline
+                                                 & Import/Export               & 100                             \\ 
+\hline
+Testování                                        & Jednotkové testy            & 120                             \\ 
+\hline
+                                                 & Závistlosti vlastností      & 24                              \\ 
+\hline
+                                                 & GUI                         & 24                              \\ 
+\hline
+                                                 & Parser Xtext – nástroj      & 40                              \\ 
+\hline
+                                                 & Generátor nástroj – TesaTK  & 40                              \\ 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937}                & \textbf{Celkem:}            & \textbf{1100}                   \\
+\bottomrule
+\end{tabular}
+\caption{Odhad času vývoje vlastního nástroje s jeho fázemi}
+\end{table}
+
+Analýza by zahrnovala sběr požadavků od koncových uživatelů, jejich vyhodnocení a seznámení s technologiemi potřebnými pro vývoj, jemiž jsou gramatika psaná v Xtextu, seznámení s konfigurátorem TesaTK, seznámení se s technologií modelování vlastností a její konfigurace. Dále by bylo třeba zvážit, jaký programovací jazyk by byl pro vývoj nejvhodnější a výběr odůvodnit. Odhadovaný čas analýzy by v takovém případě byl 120 hodin, tedy 15 pracovních dní. 
+
+Během návrhu implementace by bylo potřeba navrhnout parser, který dokáže z gramatiky v Xtextu dynamicky tvořit model vlastností, tedy namapovat typy vlastností na syntaxi jazyka Xtext. Dále by bylo potřeba vybrat vhodné prostředky pro jejich zobrazení, což úzce souvisí s výběrem programovacího jazyka a frameworku, který by se využil. Na základě objektové analýzy by bylo potřeba navrhnout strukturu aplikace. Odhadovaný čas návrhu implementace by byl 72 hodin, tedy 9 pracovních dní.
+
+Implementace by zahrnovala vytvořit parser z gramatiky, který by importoval model vlastností do nástroje, celé uživatelské prostředí včetně zobrazení modelu vlastností, generátor konfigurace variant jako šablon v jazyce Tesa a export modelů variant. Dále by bylo třeba vypořádat se se všemi problémy, které by během implementace mohli nastat. Odhadovaný čas implemetace je 660 hodin, tedy 83 pracovních dní.
+
+Během testování by bylo třeba napsat jednotkové testy a otestovat tak celou aplikaci a opravit veškeré chyby, které by se při implementaci mohli objevit. Odhadovaný čas testování je 248 hodin, tedy 31 pracovních dní.
+
+Pokud by všechny předešlé fáze dopadly úspěšně, proběhla by validace všech fází a nástroj by se mohl začít používat. Celkový odhadovaný čas strávený vývojem této aplikace by tak byl 1100 hodin, tedy 138 pracovních dní. Pokud odhadneme cenu jedné programátorské hodiny na 1000kč, dostaneme odhadovanou cenu nástroje, která by činila 1,1 milion korun. Důležité je vzít v potaz, že odhadovaný čas se může lišit o více jak 100\% času stráveného na vývoji. Při vývoji by bylo vytvořeno několik prototypů, na které by se nabalovaly další funkce. Kvůli administrativě a možným problémům by se vývoj mohl nátáhnout i na několikanásobek odhadovaného času.
+
+Takový nástroj je proprietární, což je jeho největší výhoda. Při jeho používání nemůže nastat situace, že by přišla nová verze, která již nebude splňovat specifické požadavky na interní nástroj. Dalšími výhodami může být jeho specifická funkčnost, která bude splňovat přesné požadavky.
+
+\section{Výběr}
+V této části bude zhodnocen výběr nástroje, který bude v práci využit, na základě ceny a funkcí, které jednotlivé nástroje nabízejí. Jednotlivým nástrojům bude přiřazeno bodové ohodnocení na základě splnění kritérií. Každé kritérium bude hodnoceno 1-5 body. Význam bodového ohodnocení je znázorněn v tabulce 3.2. Součástí bodového ohodnocení bude i vlastní nástroj, kde jsou body přiřazeny na základě subjektivního hodnocení jednotlivých částí. Posledním kritériem výběru je cena, kde bude 1 bod znázorňovat nejdražší nástroj, 5 bodů nástroje, které jsou zdarma dostupné a zbytek bodů bude vypočten poměrem.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|} 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937}  \textbf{Body}  & \textbf{Význam}        \\ 
+\hline
+1                                                 & Nepoužitelné           \\ 
+\hline
+2                                                 & Téměř použitelné       \\ 
+\hline
+3                                                 & Sotva použitelné       \\ 
+\hline
+4                                                 & Použitelné             \\ 
+\hline
+5                                                 & Použitelné s výhodami  \\
+\hline
+\end{tabular}
+\caption{Význam bodového hodnocení}
+\end{table}
+% \usepackage{colortbl}
+
+
+\subsection{Import/Export}
+Prvním kritériem je schopnost nástroje importovat a exportovat modely vlastností a konfigurací ve formě souborů v různých formátech.
+
+Nástroj pure::variants umožňuje import i export v několika formátech. Model vlastností je možné importovat jako soubor \textit{.csv}. Nedostatkem importu je absence možnosti importu omezení. Pokud budeme importovat .csv soubor, není tato omezení možné naimportovat a je možné importovat pouze základní typy závislostí. Tato omezení je třeba přidat přímo v nástroji. Model vlastností včetně omezení se dá následně sdílet pomocí projektových souborů. Kvůli této skutečnosti je nástroj hodnocen jako použitelný. Export modelu vlastností je možný ve formátech \textit{.xml}, \textit{.csv}, \textit{.html} a jako obrázek. Výsledná konfigurace lze exportovat ve formátech \textit{.csv} a \textit{.xml}. 
+
+Nástroj Xfeature neumožňuje import ani export v žádném formátu. Za toto kritérium by tedy dostal hodnocení jako nepoužitelný. Avšak díky jeho reprezentaci pomocí xml souborů by bylo možné naimportovat nebo vyexportovat tyto soubory za účelem dalšího sdílení nebo generování z projektových souborů. Díky této možnosti je hodnocen jako téměř použitelný. Toto hodnocení jej vylučuje z hodnocení, zbytek hodnocení pro tento nástroj bude tedy spíše demonstrativní.
+
+Nástroj FMP umožňuje import a export modelu vlastností i výsledné konfigurace ve formátu \textit{.xml}, ale bohužel pouze ve starší verzi. Tato možnost byla z verze 0.6.6 odebrána. K importu a exportu by bylo tedy třeba využít starší verzi, což z aktuální verze činí verzi nepoužitelnou. Budeme se tedy zabývat verzí starší. Bohužel ani ve starší verzi neumožňuje žádné jiné formáty kvůli čemu je hodnocen jako sotva použitelný. Oproti pure::variants však umožňuje starší verze import i export včetně globálních omezení. 
+
+SPLOT umožňuje export modelu vlastností a konfigurací ve formátech \textit{.xml} a \textit{.csv}. Bohužel ale neumožňuje žádný import. Import modelu vlastností je možný pouze z online repozitáře, který obsahuje jiné modely a nový model je tedy potřeba vytvořit přímo v nástroji. Kvůli této skutečnosti se nedá k generování modelu vlastností použít a je tedy hodnocen jako nepoužitelný. Další hodnocení nástroje bude tedy stejně jako Xfeature spíše demonstrativní.
+
+Vlastní nástroj by měl umožnit import a export modelu vlastností i jeho konfigurace. Implementace by pravděpodobně obstarávala možný import a export souborů pouze v jednom formátu, což činí nástroj použitelným.
+
+\subsection{Přehlednost}
+Druhým kritériem je přehlednost reprezentace modelu vlastností. Požadavkem je tvořit a editovat modely vlastností a jejich konfigurace ve stromovém grafu, nebo jiném uživatelsky přehledném zobrazení a možnost získat z nástroje graf dle \cite{Czarnecki98}.
+
+Nástroj pure::variants zobrazuje model vlastností i jeho konfigurace v přehledné stromové architektuře. Konfigurace probíhá v jiném stromě než původní model vlastností. Model vlastností je také možno zobrazit v grafu, který však neodpovídá značení podle \cite{Czarnecki98}. Globální omezení jsou tvořeny v dialogovém okně a následně jsou ve stromě znázorněny přímo u vlastností. Pokud je na vlastnost ukázáno myší, barevně se rozsvítí ostatní vlastnosti, na které se tato globální omezení vztahují. Tento nástroj splňuje daná kritéria, až na zobrazení grafu dle \cite{Czarnecki98}. Je tedy hodnocen jako použitelný.
+
+V nástroji Xfeature je model vlastností zobrazován grafem. V tomto grafu probíhá tvoření i editace modelu vlastností i konfigurací. Tento graf využívá jiné značení, než které je uvedeno v \cite{Czarnecki98}. Toto zobrazení se však stává velmi nepřehledným ve větších a komplexnějších modelech což z něj činí nástroj téměř použitelný pro toto kritérium.
+
+Nástroj FMP zobrazuje model vlastností v přehledné stromové architektuře podobné jako pure::variants. Avšak konfigurace je tvořena ve stejném stromě, což může konfiguraci znepřehlednit. FMP neumožňuje model vlastností zobrazit v grafu. Další nevýhodou jsou globální omezení, která se zobrazují v jiném okně a ne přímo u vlastností. Nástroj je tedy hodnocen jako sotva použitelný.
+
+SPLOT zobrazuje model vlastností opět ve stromové architektuře, která je velmi přehledná. Přehledná je také konfigurace, která probíhá v jiném okně pomocí vybírání jednotlivých vlastností. Globální omezení jsou popsány pomocí značek podobných matematickým symbolům průniku a sjednocení a jsou zapsány pod stromem. Přímo ve stromě však nikde nejsou vidět. Nástroj také neumožňuje zobrazení modelu vlastností v grafu. Nástroj je tedy sotva použitelný.
+
+Přehlednost ve vlastním nástroji by musela být zařízena stromovým zobrazením a schopností vygenerovat graf podle \cite{Czarnecki98}. Zobrazení by bylo pravděpodobně inspirováno nástrojem pure::variants. V dostupném čase na vývoj nástroje by pravděpodobně nástroj neměl možnost zobrazení v grafu. Zajistit celkovou přehlednost by bylo složité. Nástroj je tedy hodnocen jako sotva použitelný.
+
+\subsection{Konfigurace}
+Třetím kritériem je tvorba konfigurace z modelu vlastností. Důraz je kladen na hlídání závislostí.
+
+Nástroj pure::variants umožňuje tvorbu konfigurace v jiném okně, než je původní model vlastností. Pro každou konfiguraci je tvořen samostatný soubor. Konfigurace je tvořena pomocí zaškrtávání jednotlivých vlastností a nástroj sám hlídá dodržení všech závislostí. Pokud jsou použita omezení, nástroj při výběru vlastnosti sám zaškrtá jiné vlastnosti, které vlastnost vyžaduje, nebo odškrtá některé, které vylučuje. Všechny konfigurace se také dají zobrazit vedle sebe v jednom z pohledů. V tomto pohledu jsou také vidět upozornění, které značí uživateli, že někde mohl vybrat variantu, která s modelem vlastností nekoresponduje a jsou mu nabízeny opravy. Nástroj tvoří konfigurace bez žádných problémů a poskytuje mnoho výhod uživateli. Je tedy hodnocen jako použitelný s výhodami.
+
+V nástroji Xfeature uživatel při tvorbě konfigurace musí opět vytvářet nový stromový diagram, u kterého jsou mu nabízeny pouze volby podle daného modelu vlastností. Tato tvorba tedy zahrnuje vytvořit strom znovu, pouze s vlastnostmi, které vyžaduje a ne formou vybírání již existujících vlastností. Tato konfigurace je validována na základě původního modelu vlastností, což uživateli nedovoluje vytvořit konfiguraci, která nekoresponduje s původním modelem. Nástroj je kvůli této formě konfigurace sotva použitelný. 
+
+Nástroj FMP stejně jako pure::variants umožňuje tvorbu konfigurací, které jsou tvořeny pomocí zaškrtávání jednotlivých vlastností v původním stromě. Konfigurace však probíhá přímo v modelu vlastností, což může být nepřehledné. Při tvorbě jsou uživateli nabízeny všechny validní možnosti, ze kterých může při konfiguraci vybírat a jejich výběr je hlídán tak, aby korespondoval s původním modelem vlastností. Po vytvoření konfigurace se tato konfigurace uloží a je možné ji zobrazit přímo ve stromě. Nástroj je tedy použitelný.
+
+Konfigurace v nástroji SPLOT je tvořena v jiném okně než je model vlastností. Možnosti konfigurace jsou opět hlídány na základě původního modelu vlastností. Velkou výhodou jsou dva přístupy popsané v sekci o nástroji. Po vytvoření konfigurace je možné je exportovat ve formátu \textit{.xml} a \textit{.csv}. Nevýhodou je však, že tuto konfiguraci nelze nijak uložit pro případné úpravy. Pokud je třeba vytvořit konfiguraci, která se bude oproti jiné lišit například ve výběru jediné vlastnosti, je třeba celou konfiguraci vytvořit znovu, což činí nástroj sotva použitelným.
+
+Vlastní nástroj by měl umět konfigurace zobrazovat v jiném okně a hlídat ji tak, aby korespondovala s původním modelem vlastností. Tuto konfiguraci by mělo být možné uložit, načíst a exportovat v různých formátech. Náročnost tvorby této konfigurace souvisí se závislostmi mezi vlastnostmi, GUI a exportem importem. V dostupném čase by se dosáhlo sotva použitelnému tvoření konfigurace.
+
+\subsection{Cena}
+Posledním kritériem je cena. Cena je důležitým faktorem při výběru nástroje. Nejdražší nástroj bude hodnocen 1 bodem a nejlevnější nástroj 5 body. Ostatní budou hodnoceny poměrem.
+
+Pure::variants je komerčně využívaný nástroj s velkým množstvím funkcí a podporou od svého vydavatele. To z něj činí nástroj s vysokou cenou. Cena jedné licence je 10 000 eur. Tuto licenci je třeba každý rok prodloužit. Cena tohoto prodloužení je 20\% z pořizovací ceny, tudíž 2000 eur. Cena takového nástroje by tedy rostla s délkou jeho používání. Hodnotíme jej tedy jako nejdražší nástroj a přiřadíme mu 1 bod. 
+
+Nástroje Xfeature, FMP a SPLOT jsou zdarma a jsou tedy hodnoceny 5 body. 
+
+Cenu vlastního nástroje jsme odhadli na 1,1 milionu korun, která je srovnatelná se čtyřmi licencemi na nástroj pure::variants. Za předpokladu, že tedy budou využity čtyři licence pro práci s nástrojem, vlastní nástroj bude mít návratovost jeden rok. Po jednom roce se nástroj pure::variants zdraží o 20\%. Kvůli tomu je vlastní nástroj hodnocem 2 body.
+
+\section{Shrnutí}
+
+\begin{table}[H]
+\centering
+\scalebox{0.9}{
+\begin{tabular}{|c|c|c|c|c|c|} 
+\hline
+\rowcolor[rgb]{0.937,0.937,0.937}                             & \textbf{Imp/Exp}  & \textbf{Přehlednost}  & \textbf{Konfigurace}  & \textbf{Cena}  & Celkem        \\ 
+\hline
+{\cellcolor[rgb]{0.937,0.937,0.937}}\textbf{pure::variants}   & 4                       & 4                             & 5                     & 1              & \textbf{14}   \\ 
+\hline
+{\cellcolor[rgb]{0.937,0.937,0.937}}\textbf{Xfeature}         & 1                       & (2)                           & (3)                   & (5)            & \textbf{(11)}   \\ 
+\hline
+{\cellcolor[rgb]{0.937,0.937,0.937}}\textbf{FMP}              & 3                       & 3                             & 4                     & 5              & \textbf{15}   \\ 
+\hline
+{\cellcolor[rgb]{0.937,0.937,0.937}}\textbf{SPLOT}            & 1                       & (3)                           & (4)                   & (5)            & \textbf{(13)}   \\ 
+\hline
+{\cellcolor[rgb]{0.937,0.937,0.937}}\textbf{Vlastní nástroj}  & 4                       & 3                             & 3                     & 2              & \textbf{12}   \\
+\hline
+\end{tabular}}
+\caption{Bodové ohodnocení jednotlivých nástrojů}
+\end{table}
+
+Pokud srovnáme bodové ohodnocení všech nástrojů, zjsistíme, že se příliš neliší. Každý nástroj má své výhody a nevýhody, které jsou popsány ve srovnání. Nejvyšší počet dostal nástroj FMP. Tento nástroj však získal vysoké bodové ohodnocení oproti nástroji pure::variants, které dosáhlo nižšího hodnocení pouze o jeden bod, hlavně díky své ceně. Zbytek hodnocení za nástrojem pure::variants zaostává. Pokud by byl nástroj FMP dolazen o možnosti importu, exportu, a tvorbu konfigurace, byl by zcela jistě použit pro účely bakalářské práce. Na druhém místě skončil nástroj pure::variants. Z tabulky je jasné, že cena je jeho největší nevýhodou a že zbytek kritérií s lehkými nedostatky splňuje. Nejnižší hodnocení dostal nástroj Xfeature, který se zdá být nevhodným nástrojem pro potřeby bakalářské práce již kvůli prvnímu kritériu. Největší nevýhodou nástroje je absence přímého exportu a importu modelu vlastností a jeho konfigurací a uživatelsky nepřívětivá tvorba konfigurací. Třetím nejlépe hodnoceným nástrojem je překvapivě nástroj SPLOT, který by pravděpodobně byl nejvhodnějším nástrojem, kdyby umožňoval import modelu vlastností. Na posledním místě také skončil vlastní nástroj, jehož hodnocení bylo odvozeno na základě představy implementace v dostupném čase, tudíž žádný z jeho bodů nedostal plné hodnocení. 
+
+Důležitým faktorem jsou také preference společnosti ZF. Tato společnost již zakoupila několik licencí na nástroj pure::variants i přes možnou implementaci vlastního nástroje, který by mohl být ve finále mnohem vhodnějším nástrojem a na kterém by v budoucnu ušetřila. Avšak preferencí ZF je čas. Společnost momentálně dává přednost zakoupit licence na nástroj, který bude používat, než strávit půl roku vývojem funkčního prototypu vlastního nástroje.
+
+Z těchto důvodů je pure::variants nejvhodnějším nástrojem a bude použit pro potřeby bakalářské práce.

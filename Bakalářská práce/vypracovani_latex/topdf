@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bibtex BP
+pdflatex BP

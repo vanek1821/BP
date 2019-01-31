@@ -1,0 +1,76 @@
+\begin{thebibliography}{10}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Antkiewicz -- Czarnecki(2004)Antkiewicz, Czarnecki]{Ant04}
+{\sc Antkiewicz}, M. -- {\sc Czarnecki}, K.
+\newblock \emph{FeaturePlugin: Feature Modeling Plug-In for Eclipse}.
+\newblock Publikováno na konferenci The 2004 OOPSLA Workshop on Eclipse
+  Technology eXchange, 2004.
+\newblock Canada, WaterLoo: University of Waterloo, 2004.
+
+\bibitem[Behrens et~al.(2008)Behrens, Clay, Efftinge, Eysholdt,, Friese]{Xtext}
+{\sc Behrens}, H. et~al.
+\newblock \emph{Xtext User Guide}, 2008.
+\newblock Dostupn{\'{e}}~z:
+  \url{https://www.eclipse.org/Xtext/documentation/1_0_1/xtext.pdf}.
+
+\bibitem[Czarnecki(1998)]{Czarnecki98}
+{\sc Czarnecki}, K.
+\newblock \emph{Generative Programming: Principles and Techniques of Software
+  Engineering Based on Automated Configuration and Fragment-Based Component
+  Models}.
+\newblock PhD thesis, Technische Universit at Ilmenau, Germany, Ilmenau, 1998.
+\newblock Department of Computer Science and Automation, Vedoucí práce Prof.
+  Dr. U. W. Eisenecker.
+
+\bibitem[Czarnecki et~al.(1998)Czarnecki, Eisenecker,, Glück]{Ceg98}
+{\sc Czarnecki}, K. -- {\sc Eisenecker}, U. -- {\sc Glück}, R.
+\newblock \emph{Generative Programming and Active Libraries}.
+\newblock Draft submitted for publication, 1998.
+
+\bibitem[Czarnecki et~al.(2005{\natexlab{a}})Czarnecki, Helsen,,
+  Eisenecker]{Czarneckia05}
+{\sc Czarnecki}, K. -- {\sc Helsen}, S. -- {\sc Eisenecker}, U.
+\newblock \emph{Formalizing Cardinality-based Feature Models and their
+  Specialization}, 2005{\natexlab{a}}.
+\newblock Canada, Waterloo: University of Waterloo.
+
+\bibitem[Czarnecki et~al.(2005{\natexlab{b}})Czarnecki, Helsen,,
+  Eisenecker]{Czarneckib05}
+{\sc Czarnecki}, K. -- {\sc Helsen}, S. -- {\sc Eisenecker}, U.
+\newblock Staged Configuration Through Specialization and Multilevel
+  Configuration of Feature Models.
+\newblock \emph{Software Process: Improvement and Practice}.
+  2005{\natexlab{b}}, 10.
+\newblock \doi{10.1002/spip.225}.
+
+\bibitem[Fowler()]{Fowler}
+{\sc Fowler}, M.
+\newblock \emph{Domain Specific Languages}.
+\newblock Addison-Wesley Professional.
+
+\bibitem[Pasetti -- Rohlík(2005)Pasetti, Rohlík]{Pas05}
+{\sc Pasetti}, A. -- {\sc Rohlík}, O.
+\newblock \emph{Technical Note on a Concept for the XFeature Tool}.
+\newblock Technical report, P\&P Software, [s.l.], 2005.
+\newblock Dostupn{\'{e}}~z:
+  \url{http://www.pnp-software.com/XFeature/pdf/XFeatureToolConcept.pdf}.
+
+\bibitem[pure–systems GmbH(2013)]{Pure13}
+{\sc GmbH}.
+\newblock \emph{pure::variants User's Guide}.
+\newblock pure-systems, [s.l.], 2013.
+\newblock Dostupn{\'{e}}~z:
+  \url{http://www.pure-systems.com/fileadmin/downloads/pure-variants/doc/pv-user-manual.pdf}.
+
+\bibitem[Riebisch et~al.(2002)Riebisch, Böllert, Streitferdt,,
+  Philippow]{Rieb02}
+{\sc Riebisch}, M. et~al.
+\newblock \emph{Extending Feature Diagrams with UML Multiplicities}, 2002.
+\newblock Germany, Ilmenau: Ilmenau Technical University.
+
+\end{thebibliography}

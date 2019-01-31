@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2018)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: BP.aux
+The style file: csplainnatkiv.bst
+format.article.crossref is an unknown function---line 750 of file csplainnatkiv.bst
+Database file #1: literatura.bib
+I was expecting a `,' or a `}'---line 5 of file literatura.bib
+ :  
+ :  year = {2010},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--empty year in Fowler
+Warning--empty year in Fowler
+You've used 10 entries,
+            2898 wiz_defined-function locations,
+            682 strings with 6730 characters,
+and the built_in function-call counts, 3902 in all, are:
+= -- 335
+> -- 230
+< -- 5
++ -- 77
+- -- 66
+* -- 324
+:= -- 655
+add.period$ -- 36
+call.type$ -- 10
+change.case$ -- 36
+chr.to.int$ -- 9
+cite$ -- 22
+duplicate$ -- 191
+empty$ -- 298
+format.name$ -- 100
+if$ -- 781
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 3
+newline$ -- 63
+num.names$ -- 48
+pop$ -- 112
+preamble$ -- 1
+purify$ -- 35
+quote$ -- 0
+skip$ -- 129
+stack$ -- 0
+substring$ -- 20
+swap$ -- 36
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 105
+warning$ -- 2
+while$ -- 28
+width$ -- 0
+write$ -- 142
+(There were 2 error messages)

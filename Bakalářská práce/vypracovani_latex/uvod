@@ -1,0 +1,9 @@
+\chapter{Úvod}
+
+Generování softwarových komponent bude využívat generativního programování. Generativní programování je způsob programování, kdy je zdrojový kód programu generován na základě šablony. Tuto šablonu tvoří různé vzory.  
+
+K vytvoření šablony, pro vygenerování finálního zdrojového kódu bude v práci využíván model vlastností. Model vlastností zachycuje všechny různorodosti a podobnosti všech možných variant finálního produktu. Různé charakteristiky, které finální produkty rozlišují se nazývají právě vlastnosti. 
+
+Cílem této práce bude vygenerovat šablonu jako model vlastností ze zápisu gramatiky jazyka tesa pomocí frameworku Xtext a na základě vybraných vlastností z tohoto modelu vygenerovat finální zdrojový kód a ušetřit tak programátorům čas strávený přepisováním zdrojových kódů při změně gramatiky nebo změně konfigurace, či vytvoření nových variant konfigurace.
+
+Čtenář je v úvodní části seznámen s problematikou modelování vlastností, nástroji které jsou pro modelování, nebo tvorbu modelů využívány. Dále bude seznámen s problematikou generativního programování a frameworkem Xtext, který je jednoduchým frameworkem pro tvorbu vlastního jazyka.
