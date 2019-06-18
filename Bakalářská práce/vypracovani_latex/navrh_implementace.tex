@@ -1,0 +1,79 @@
+\chapter{Návrh implementace}
+
+V této kapitole bude popsán návrh implementace. Vzhledem k potřebě využití nástroje pure::variants, je třeba aplikaci použít dvoufázově. V první fázi musí být program schopný vytvořit soubor modelu vlastností, importovatelný do pure::variants, ze zápisu gramatiky, kterou je třeba číst. V druhé fázi je potřeba soubor modelu variant, který je exportován z nástroje pure::variants. Tento soubor bude sloužit programu jako seznam vybraných komponent. Z těchto komponent poté program vygeneruje požadovaný soubor. 
+
+\section{Načtení AST}
+
+Pro vytvoření souboru modelu vlastností je potřeba zkoumat zápis gramatiky popsaný v nástroji Xtext. Z této gramatiky je vhodné vytvořit \textit{abstraktní syntaktický strom}. Tato struktura bude následně obsahovat veškéré komponenty zapsané gramatiky, včetně klíčových slov a přiřazení proměnných. Model vlastností bude vytvořen z tohoto stromu jako jeho část. V této části nebudou zanesena klíčová slova, která se v gramatice vyskytují. 
+
+Ke čtení se nabízejí 3 různé přístupy, které budou se svými výhodami a nevýhodami popsány dále.
+
+\subsection{Vlastní parser}
+
+Prvním přístupem, který se nabízí ke čtení gramatiky, je vytvořit vlastní parser, který bude číst textový zápis gramatiky a vytvoří z ní abstraktní syntaktický strom. Čtení gramatiky by probíhalo znak po znaku s jejich vyhodnocováním a postupným sestavováním.
+
+Problémem, který v takovém případě nastane je rozmanitost způsobu zápisu. Uživatel si může svůj jazyk popsat jakýmkoliv způsobem. Různé způsoby mohou zahrnovat různé úrovně zanoření, tvořený jazyk může obsahovat speciální znaky, které se využívají i při vlastním zápisu nebo může být popsaný na různém počtu řádků. Všechny tyto problémy je možné vyřešit a napsat tak parser, který dokáže vytvořit abstraktní syntaktický strom z gramatiky jakéhokoliv jazyka. Takový parser se zdá být vhodný pro účely bakalářské práce, avšak jeho tvorba je zbytečná. Nástroj Xtext dokáže z libovolné gramatiky vygenerovat prostředí, ve kterém je možné náš jazyk psát s veškerými výhodami vývojového prostředí Eclipse. Znamená to tedy, že nástroj samotný gramatiku čte a abstraktní syntaktický strom z ní tvoří. Z tohoto důvodu není vhodné takový parser psát.
+
+\subsection{Ecore}
+Druhým přístupem, který se k sestavení stromu nabízí, je soubor \textit{Ecore}. Tento soubor je vytvořen nástrojem Xtext při tvorbě všech komponent potřebných pro vygenerování prostředí. Soubor je popsán ve formátu XML. V tomto souboru jsou komponenty gramatiky zaneseny jako objekty typu \textit{EObject}. Struktura xml souboru je narozdíl od původní gramatiky značně čitelnější a konzistentní. Z toho souboru je jasně vidět, jaké "třídy" gramatika obsahuje a seznam proměnných, které jsou ve třídě zaneseny.
+
+Ačkoliv se tento přístup zdá být vhodný, obsahuje také několik problémů. Nejzásadnějším problémem, který činí tento soubor nepoužitelným pro účely aplikace, je absence všech klíčových slov, které jsou pro generování jazyka potřeba. Soubor obsahuje pouze názvy proměnné a třídy, na které tyto proměnné ukazují. Dalším problémem je absence kardinalit jednotlivých proměnných. Tyto kardinality jsou popsány v části 5.2.2.
+
+Tyto problémy je možné vyřešit vytvořením stromu ze souboru ecore a strom na základě načtených proměnných doplnit přímo ze souboru se zápisem gramatiky. S tím však souvisí problémy z předchozí části. Zároveň vytvořený ecore soubor v některých místech nemusí odpovídat přímému zápisu gramatiky. Příkladem této nesrovnalosti může být třída, která v zápisu obsahuje výběr ze dvou dalších tříd, které mají několik společných proměnných. Během tvorby ecore souboru jsou společné proměnné těchto tříd přiřazeny třídě nadřazené. Kvůli těmto rozdílům jsou některé proměnné obtížné dohledat. 
+
+\subsection{GrammarAccess}
+Třetí přístup doporučil jeden z předních vývojářů nástroje Xtext Sebastian Zarnekow. Xtext obsahuje parser, který je schopný gramatiku přečíst a abstraktní syntaktický strom vytvořit. K tomu využívá nástroj Antlr. Parser při spuštění načte gramatiku právě do abstraktního syntaktického stromu. Tento strom obsahuje veškéré komponenty popsané gramatiky, včetně kardinalit a klíčových slov. Tento model je uložen v proměnné typu \textit{GrammarAccess}. Tuto proměnnou je možné získat pomocí techniky \textit{vkládání závislostí} ( z angl. \textit{Dependency Injection}). Do některého souboru je možné vložit závislost na \textit{GrammarAccess} a následně je možné programově gramatiku prozkoumat. Z tohoto důvodu bude tato metoda v implementaci použita. 
+
+Tento strom je nutné načíst do vlastních struktur ve tvořené aplikaci. Je tedy potřeba tento model extrahovat z nástroje Xtext. Toho je možné docílit vytvoření souboru ve formátu xml, který tento strom bude reprezentovat se všemi komponentami, které budou použity při generování. Tento soubor bude tvořen postupným procházením stromu vytvořeného nástrojem Xtext a postupným zapisováním do tohoto souboru.
+
+\section{Tvorba modelu vlastností}
+Model vlastností bude zobrazen v nástroji pure::variants. Nástroj umožňuje import modelu vlastností ve formátu CSV. Soubor musí být strukturován způsobem popsaným v tabulce 6.1. Každý řádek tabulky odpovídá jednomu sloupci požadovaného souboru ve formátu csv.
+
+\begin{table}[H]
+\centering
+\scalebox{0.95}{
+\begin{tabular}{|c|c|} 
+\hline
+Unique Name         & Unikátní název elementu                                                                                                                                                                                                                                                                           \\ 
+\hline
+Unique ID           & Unikátní identifikátor elementu                                                                                                                                                                                                                                                                   \\ 
+\hline
+Visible Name        & Viditelné jméno elementu                                                                                                                                                                                                                                                                          \\ 
+\hline
+Variation Type      & \begin{tabular}[c]{@{}c@{}}Typy vlastností. Možné hodnoty jsou:\\~ps:mandatory pro povinné vlastnosti,\\ ps:optional pro volitelné vlastnosti,\\~ps:or pro slučitelné vlastnosti a ps:alternative\\ pro alternativní vlastnosti.\\~Pokud není vyplněno, je použit typ ps:mandatory \end{tabular}  \\ 
+\hline
+Parent Unique ID    & Unikátní identifikátor nadřazeného elementu                                                                                                                                                                                                                                                       \\ 
+\hline
+Parent Unique Name  & Unikátní název nadřazeného elementu                                                                                                                                                                                                                                                               \\ 
+\hline
+Parent Visible Name & Viditelné jméno nadřazeného elementu                                                                                                                                                                                                                                                              \\ 
+\hline
+Parent Type         & Typ vlastnosti nadřazeného elementu                                                                                                                                                                                                                                                               \\ 
+\hline
+Class               & Třída elementu, ps:feature pro model vlastností                                                                                                                                                                                                                                                   \\ 
+\hline
+Type                & Typ elementu, ps:feature pro model vlastností                                                                                                                                                                                                                                                     \\
+\hline
+\end{tabular}}
+\caption{Formát souboru pro import dle \cite{Pure13}}
+\end{table}
+
+Program bude procházet abstraktní syntaktický strom načtený do paměti a tvořit z něj soubor ve formátu CSV tak, aby jej bylo možné naimportovat do pure::variants. Strom již musí obsahovat veškeré typy vlastností načtené z gramatiky.
+
+Po načtení modelu vlastností do nástroje pure::variants je uživatel schopen vytvořit jednotlivé konfigurace nad modelem vlastností, které může z pure::variants vyexportovat. 
+
+\section{Generování}
+
+Ke generování výsledného kódu je nutné mít v paměti načtené všechny komponenty, ze kterých se bude následný kód skládat. Hlavními komponentami v této fázi jsou klíčová slova a proměnné. Tyto komponenty budou již načteny v AST, avšak mezi nimi nejsou zaneseny žádné vazby. Například, pokud budeme mít proměnnou s názvem \textit{configuration}, která před sebou obsahuje klíčové slovo \textit{"Configuration"}, neexistuje mezi nimi žádná vazba, která by jednoznačně určovala, že toto klíčové slovo patří právě k této proměnné.
+
+Generátor tedy musí tato klíčová slova hledat na základě pozic v syntaktickém stromě a hodnot klíčových slov. Tyto pozice se v gramatice opakují a je tedy možné najít vzory, podle kterých lze rozhodnout, která klíčová slova mají být generována ke konkrétním proměnným. Bohužel jsou tyto vzory specifické pro jednotlivé doménově specifické jazyky, které lze v nástroji Xtext vytvořit a generátor tedy nemůže fungovat pro jakýkoliv jazyk popsaný v Xtextu, narozdíl od tvorby AST a modelu vlastností, které je možné vytvořit z jakéhokoliv jazyka.
+
+Generátor bude procházet původní AST a kontrolovat, zda se ve vyexportovaném souboru z pure::variants nachází. Pokud ano, vygeneruje příslušné komponenty.
+
+Součástí generování je také nahrazování názvů jednotlivých proměnných unikátní reprezentací tak, aby výsledná konfigurace prošla validátorem bez chyby. Je teda potřeba zanést několik konkrétních podmínek pro názvy jednotlivých proměnných tak, aby byla výsledná konfigurace bezchybná. 
+
+
+
+
+
+

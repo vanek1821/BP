@@ -12,7 +12,7 @@
 
 % Možné jazyky práce: czech, english
 % Možné typy práce: BP (bakalářská), DP (diplomová), PRJ5 (Projekt 5)
-\documentclass[czech,PRJ5]{thesiskiv}
+\documentclass[czech,BP]{thesiskiv}
 
 % Definujte údaje pro vstupní strany
 %
@@ -101,6 +101,8 @@ Goal of this thesis is to generate feature model from gramatics of tesa language
 \input{modelovaci_nastroje.tex}
 \input{generativni_programovani.tex}
 \input{Xtext.tex}
+\input{navrh_implementace.tex}
+\input{implementace.tex}
 
 \bibliographystyle{csplainnatkiv}
 {\raggedright\small

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.13)  26 JAN 2019 18:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.13)  17 JUN 2019 12:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -525,7 +525,7 @@ Kapitola 1.
 
 ]
 Kapitola 2.
-<images/coffee.png, id=257, 1310.8975pt x 772.8875pt>
+<images/coffee.png, id=333, 1310.8975pt x 772.8875pt>
 File: images/coffee.png Graphic file (type png)
 <use images/coffee.png>
 Package pdftex.def Info: images/coffee.png  used on input line 11.
@@ -545,12 +545,12 @@ l.17
                                                   \fi \fi 
 l.48 
      ] [10]
-<images/mandatory.png, id=279, 204.765pt x 230.8625pt>
+<images/mandatory.png, id=355, 204.765pt x 230.8625pt>
 File: images/mandatory.png Graphic file (type png)
 <use images/mandatory.png>
 Package pdftex.def Info: images/mandatory.png  used on input line 78.
 (pdftex.def)             Requested size: 142.26378pt x 160.40492pt.
-<images/optional.png, id=280, 146.5475pt x 229.85875pt>
+<images/optional.png, id=356, 146.5475pt x 229.85875pt>
 File: images/optional.png Graphic file (type png)
 <use images/optional.png>
 Package pdftex.def Info: images/optional.png  used on input line 92.
@@ -569,7 +569,7 @@ File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 97.
-<images/alternative.png, id=289, 745.78625pt x 338.26375pt>
+<images/alternative.png, id=365, 745.78625pt x 338.26375pt>
 File: images/alternative.png Graphic file (type png)
 <use images/alternative.png>
 Package pdftex.def Info: images/alternative.png  used on input line 111.
@@ -581,7 +581,7 @@ Package pdftex.def Info: images/alternative.png  used on input line 111.
                                                   \fi \fi 
 l.113 \end{figure}
                    <./images/optional.png>]
-<images/or.png, id=298, 710.655pt x 353.32pt>
+<images/or.png, id=374, 710.655pt x 353.32pt>
 File: images/or.png Graphic file (type png)
 <use images/or.png>
 Package pdftex.def Info: images/or.png  used on input line 129.
@@ -632,12 +632,12 @@ Kapitola 4.
 [26
 
 ]
-<images/star_features.png, id=396, 764.8575pt x 632.3625pt>
+<images/star_features.png, id=472, 764.8575pt x 632.3625pt>
 File: images/star_features.png Graphic file (type png)
 <use images/star_features.png>
 Package pdftex.def Info: images/star_features.png  used on input line 22.
 (pdftex.def)             Requested size: 369.88582pt x 305.80772pt.
-<images/generating_process.png, id=398, 566.115pt x 661.47125pt>
+<images/generating_process.png, id=474, 566.115pt x 661.47125pt>
 File: images/generating_process.png Graphic file (type png)
 <use images/generating_process.png>
 Package pdftex.def Info: images/generating_process.png  used on input line 30.
@@ -650,7 +650,7 @@ Package pdftex.def Info: images/generating_process.png  used on input line 30.
 l.33 K
       ruh je popsán pouze vnitřním poloměrem, zatímco cípy jsou popsá...
  <./images/star_features.png>]
-<images/comparison.png, id=406, 624.3325pt x 394.47375pt>
+<images/comparison.png, id=482, 624.3325pt x 394.47375pt>
 File: images/comparison.png Graphic file (type png)
 <use images/comparison.png>
 Package pdftex.def Info: images/comparison.png  used on input line 36.
@@ -663,7 +663,7 @@ Package pdftex.def Info: images/comparison.png  used on input line 36.
 l.39 E
       fektivnějším způsobem sestavení instance je použití \textit{gen...
  <./images/generating_process.png>]
-<images/transformation_vs_composition.png, id=415, 753.81625pt x 606.265pt>
+<images/transformation_vs_composition.png, id=491, 753.81625pt x 606.265pt>
 File: images/transformation_vs_composition.png Graphic file (type png)
 <use images/transformation_vs_composition.png>
 Package pdftex.def Info: images/transformation_vs_composition.png  used on inpu
@@ -683,7 +683,7 @@ l.45 K
                                                   \fi \fi 
 l.57 
       <./images/transformation_vs_composition.png>]
-<images/diagram.png, id=430, 1074.0125pt x 1342.01375pt>
+<images/diagram.png, id=506, 1074.0125pt x 1342.01375pt>
 File: images/diagram.png Graphic file (type png)
 <use images/diagram.png>
 Package pdftex.def Info: images/diagram.png  used on input line 67.
@@ -712,25 +712,25 @@ Overfull \hbox (12.36093pt too wide) in paragraph at lines 34--35
 : / / www . eclipse . org / Xtext / download .
  []
 
-<images/xtext/hello_world_xtext.png, id=462, 415.5525pt x 99.37125pt>
+<images/xtext/hello_world_xtext.png, id=537, 415.5525pt x 99.37125pt>
 File: images/xtext/hello_world_xtext.png Graphic file (type png)
 <use images/xtext/hello_world_xtext.png>
 Package pdftex.def Info: images/xtext/hello_world_xtext.png  used on input line
  42.
 (pdftex.def)             Requested size: 386.95749pt x 92.53711pt.
 [36]
-<images/xtext/hello_world_dsl.png, id=469, 129.48375pt x 40.15pt>
+<images/xtext/hello_world_dsl.png, id=544, 129.48375pt x 40.15pt>
 File: images/xtext/hello_world_dsl.png Graphic file (type png)
 <use images/xtext/hello_world_dsl.png>
 Package pdftex.def Info: images/xtext/hello_world_dsl.png  used on input line 5
 0.
 (pdftex.def)             Requested size: 77.3903pt x 23.99767pt.
-<images/xtext/model.png, id=470, 193.72375pt x 47.17625pt>
+<images/xtext/model.png, id=545, 193.72375pt x 47.17625pt>
 File: images/xtext/model.png Graphic file (type png)
 <use images/xtext/model.png>
 Package pdftex.def Info: images/xtext/model.png  used on input line 58.
 (pdftex.def)             Requested size: 154.78062pt x 37.69353pt.
-<images/xtext/type.png, id=471, 196.735pt x 51.19125pt>
+<images/xtext/type.png, id=546, 196.735pt x 51.19125pt>
 File: images/xtext/type.png Graphic file (type png)
 <use images/xtext/type.png>
 Package pdftex.def Info: images/xtext/type.png  used on input line 66.
@@ -755,22 +755,22 @@ l.69
 l.69 
       <./images/xtext/hello_world_xtext.png> <./images/xtext/hello_world_dsl.pn
 g> <./images/xtext/model.png>]
-<images/xtext/dataType.png, id=482, 202.7575pt x 48.18pt>
+<images/xtext/dataType.png, id=557, 202.7575pt x 48.18pt>
 File: images/xtext/dataType.png Graphic file (type png)
 <use images/xtext/dataType.png>
 Package pdftex.def Info: images/xtext/dataType.png  used on input line 74.
 (pdftex.def)             Requested size: 154.78062pt x 36.78036pt.
-<images/xtext/entity.png, id=483, 457.71pt x 76.285pt>
+<images/xtext/entity.png, id=558, 457.71pt x 76.285pt>
 File: images/xtext/entity.png Graphic file (type png)
 <use images/xtext/entity.png>
 Package pdftex.def Info: images/xtext/entity.png  used on input line 82.
 (pdftex.def)             Requested size: 309.56717pt x 51.59607pt.
-<images/xtext/feature.png, id=484, 362.35374pt x 42.1575pt>
+<images/xtext/feature.png, id=559, 362.35374pt x 42.1575pt>
 File: images/xtext/feature.png Graphic file (type png)
 <use images/xtext/feature.png>
 Package pdftex.def Info: images/xtext/feature.png  used on input line 90.
 (pdftex.def)             Requested size: 270.86905pt x 31.51447pt.
-<images/xtext/tutorial_xtext.png, id=485, 671.50874pt x 376.40625pt>
+<images/xtext/tutorial_xtext.png, id=560, 671.50874pt x 376.40625pt>
 File: images/xtext/tutorial_xtext.png Graphic file (type png)
 <use images/xtext/tutorial_xtext.png>
 Package pdftex.def Info: images/xtext/tutorial_xtext.png  used on input line 98
@@ -802,7 +802,7 @@ l.101
 l.101 
        <./images/xtext/type.png> <./images/xtext/dataType.png> <./images/xtext/
 entity.png> <./images/xtext/feature.png>]
-<images/xtext/tutorial_dsl.png, id=498, 337.26pt x 584.1825pt>
+<images/xtext/tutorial_dsl.png, id=573, 337.26pt x 584.1825pt>
 File: images/xtext/tutorial_dsl.png Graphic file (type png)
 <use images/xtext/tutorial_dsl.png>
 Package pdftex.def Info: images/xtext/tutorial_dsl.png  used on input line 108.
@@ -821,30 +821,51 @@ on with the same identifier (name{figure.5.9}) has been already used, duplicate
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.119 
-       <./images/xtext/tutorial_dsl.png>] [41]) (./BP.bbl [42]
+       <./images/xtext/tutorial_dsl.png>] [41]) (./navrh_implementace.tex
+[42]
+Kapitola 6.
+[43
+
+] [44] [45pdfTeX warning (ext4): destination with the same identifier (name{tab
+le.6.1}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.68 
+     ]) (./implementace.tex [46]
+Kapitola 7.
+[47
+
+] [48] [49] [50] [51] [52]
+Overfull \hbox (3.0647pt too wide) in paragraph at lines 97--98
+[]\T1/lmr/m/it/12 ConfigSubsystemItem \T1/lmr/m/n/12 - vy-ge-ne-ro-v�no \T1/lmr
+/m/it/12 Sys-tem_name.NameIUser_name 
+ []
+
+[53]) (./BP.bbl [54]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95> on input line 19.
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 110.
- [43
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 112.
+ [55
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 110.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 112.
  (./BP.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 110.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 110.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 112.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 112.
 Package rerunfilecheck Info: File `BP.out' has not changed.
-(rerunfilecheck)             Checksum: 884E56C8FC0252831821686769AB9392;5255.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 110.
+(rerunfilecheck)             Checksum: 878499FF3E96F3592D93969DBD310D50;7235.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 112.
  ) 
 Here is how much of TeX's memory you used:
- 11684 strings out of 492649
- 167989 string characters out of 6129622
- 282860 words of memory out of 5000000
- 15253 multiletter control sequences out of 15000+600000
+ 11755 strings out of 492649
+ 168903 string characters out of 6129622
+ 282870 words of memory out of 5000000
+ 15282 multiletter control sequences out of 15000+600000
  70342 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,16n,42p,1512b,509s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,17n,42p,1512b,509s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/
 texlive/2018/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}</usr/local/texlive/20
 18/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2018/texmf-d
@@ -856,10 +877,10 @@ ic/lm/lmr12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/lm/lmr17
 live/2018/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2018/
 texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2018/texmf-dist
 /fonts/type1/public/lm/lmtt12.pfb>
-Output written on BP.pdf (43 pages, 1325185 bytes).
+Output written on BP.pdf (55 pages, 1355272 bytes).
 PDF statistics:
- 602 PDF objects out of 1000 (max. 8388607)
- 502 compressed objects within 6 object streams
- 131 named destinations out of 1000 (max. 500000)
- 440 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 746 PDF objects out of 1000 (max. 8388607)
+ 633 compressed objects within 7 object streams
+ 168 named destinations out of 1000 (max. 500000)
+ 560 words of extra memory for PDF output out of 10000 (max. 10000000)
 

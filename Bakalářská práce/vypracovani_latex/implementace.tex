@@ -1,0 +1,143 @@
+\chapter{Implementace}
+
+V této kapitole bude popsána implementace aplikace. Budou zde popsány jednotlivé třídy a metody, které se starají o celkovou funkci aplikace. První částí, která zde bude popsána bude gramatika a její extrakce z nástroje Xtext. Následně bude popsána implementace vlastní aplikace.
+
+\section{Gramatika}
+
+Tato část se zabývá extrahováním gramatiky z nástroje Xtext. Gramatika je popsána v nástroji v samostatném souboru s příponou \textit{xtext}. Tento soubor byl modifikován pro účely bakalářské práce společností ZF Engineering kvůli zachování výrobního tajemství.
+
+Podle návrhu popsaném v části 6.1.3 bude k přečtení gramatiky využito rozhraní \textit{IGrammarAccess}. Toto rozhraní je možné vložit do jedné ze tříd, která je používána při běhu nástroje, konkrétně do třídy \textit{ConfiguratorValueConverter}. K tomuto vložení se využívá techniky \textit{vkládání závislostí} (z angl. \textit{Dependency Injection}). Přístup k rozhraní je realizován pomocí proměnné \textit{grammarAccess}, která je typována právě na vložené rozhraní. Model gramatiky je poté možné získat metodou \textit{getGrammar()} přímo nad proměnnou s rozhraním. Tento model je uložen do proměnné \textit{grammar} a obsahuje veškeré komponenty popsané gramatiky. 
+
+O sestavení modelu, který bude transformován do xml souboru je využito knihovny \textit{org.w3c.dom}. Tato knihovna umožňuje tvořit objekty typu \textit{Element}, přidávat jim atributy a napojovat další elementy jako potomky. 
+
+Model gramatiky obsahuje základní pravidla, která jsou v gramatice popsána. K těmto pravidlům je nad proměnnou s gramatikou možné přistoupit metodou \textit{getRules()}, jejíž návratovou hodnotou je list objektů typu \textit{AbstractRule}. Tento list je v cyklu procházen a každé pravidlo zpracováno. Pravidla jsou do xml souboru vypsána s klíčovým slovem \textit{Rule}, obsahující atribut \textit{name}.
+
+Po vytvoření každého pravidla je volána metoda \textit{processType}, která se stará o zpracování elementů, které obsahuje. Tyto elementy jsou několika typů. Tyto typy jsou: 
+
+\begin{itemize}
+	\item \textit{KeywordImpl} - označuje klíčové slovo
+	\item \textit{AssignmentImpl} - označuje přiřazení
+	\item \textit{GroupImpl} - obsahuje skupinu dalších elementů, u nichž záleží na pořadí
+	\item \textit{UnorderedGroupImpl} - obsahuje skupinu dalších elementů, u nichž nezáleží na pořadí
+	\item \textit{ActionImpl} - označuje akci, nejsou relevantní pro účely bakalářské práce
+	\item \textit{RuleCallImpl} - označuje další pravidlo, na které tento elemenent ukazuje
+	\item \textit{AlternativesImpl} - označuje alternativy, mezi kterými lze vybírat
+	\item \textit{CrossReferenceImpl} - slouží k přiřazení již existujícího elementu
+	\item \textit{EnumLiteralDeclarationImpl} - označuje výčtové typy
+\end{itemize}
+
+Tyto typy jsou získány metodou \textit{getSimpleName()} třídy \textit{Class}, která vrací hodnotu typu \textit{String}. Tyto hodnoty rozlišuje switch, který na základě těchto typů volá jednotlivé metody. Tyto metody se starají o zpracování různých typů a přidáním těchto elementů do modelu. Všechny metody jsou popsány dále.
+
+Po vytvoření modelu je vytvořen finální xml soubor, do kterého je tento model transformován třídou Transformer z knihovny \textit{javax.xml.transform}.
+
+\subsubsection{processKeyword}
+Metoda se stará o zpracování klíčových slov. Do souboru xml je element vypsán s klíčovým slovem \textit{Keyword} a obsahuje atribut \textit{value}, kterému je přiřazena hodnota klíčového slova.
+\subsubsection{processAssignment}
+Metoda se stará o zpracování přiřazení. Do souboru xml je element vypsán s klíčovým slovem \textit{Assignment} a obsahuje atribut \textit{name}, kterému je přiřazena hodnota podle názvu elementu. Dále obsahuje atribut \textit{cardinality}, který značí typ vlastnosti. Následně je v metodě znovu volána metoda \textit{processType}, která tomuto elementu přiřadí další element, který je mu přiřazen.
+\subsubsection{processGroup}
+Metoda zpracovává skupinu dalších elementů. Do souboru xml je vypsána klíčovým slovem \textit{Group} a obsahuje atribut \textit{cardinality}, který značí typ vlastnosti. Následně je volána metoda \textit{processType} pro všechny elementy, které tato skupina obsahuje.
+\subsubsection{processUnorderedGroup}
+Metoda zpracovává skupinu totožně, jako metoda \textit{processGroup}. Pro účely bakalářské práce není potřeba mezi těmito dvěma typy dále rozlišovat.
+\subsubsection{processAction}
+Metoda akce nijak nezpracovává, protože nejsou relevantní pro účely bakalářské práce. Metoda je zde pouze z důvodu možnosti pozdějšího rozšíření.
+\subsubsection{processRule}
+Metoda zpracovává pravidla, která jsou přiřazena nějakému dalšímu elementu. Tomuto elementu pak vytvoří do souboru xml prvek s klíčovým slovem \textit{Parent} a atributem \textit{name}, kterému je přiřazena hodnota názvu tohoto elementu.
+\subsubsection{processAlternatives}
+Metoda zpracovává alternativy, mezi kterými lze vybírat. Činí tak přiřazením atributu \textit{cardinality} s hodnotou \textit{|} předchozímu elementu. Následně volá metodu \textit{processType} pro všechny své elementy.
+\subsubsection{processCrossReference}
+Metoda zpracovává reference napříč gramatikou. Do souboru xml je vypíše element s klíčovým slovem \textit{Reference} s atributem \textit{name}, který nabývá hodnoty názvu referencovaného elementu.
+\subsubsection{processEnumLiteral}
+Metoda zpracovává výčtové typy. Do souboru xml je element vypsán s klíčovým slovem \textit{Enum} s atributy \textit{name}, který nabývá hodnoty názvu výčtového typu a \textit{value}, který nabývá hodnoty tohoto elementu.
+
+\section{Vstup aplikace}
+
+Aplikace je pouze konzolová a je spouštěna z příkazové řádky se vstupními parametry. Všechny parametry jsou aplikací kontrolovány. Prvním parametrem je soubor reprezentující gramatiku, jehož generování je popsáno v předchozí části. Druhým parametrem po spuštění aplikace je parametr \textit{Režim}, kterým uživatel určuje užití aplikace. 
+
+Parametr může nabývat hodnot \textit{\{1;2\}}. Hodnotu 1 uživatel použije v případě, že po aplikaci požaduje vytvořit soubor importovatelný do nástroje Pure::Variants. V takovém případě je třetím vstupním parametrem název souboru, který aplikace vytvoří. Parametr s hodnotou 2 použije uživatel v případě, že již má vytvořenou konfiguraci z nástroje Pure::Variants a chce vygenerovat validní tesa soubor. V takovém případě je třetím parametrem název souboru s vytvořenou konfigurací z nástroje Pure::Variants a čtvrtým parametrem název souboru, který aplikace vygeneruje.
+
+\section{Vytvoření AST}
+
+V obou případech nastavení režimu aplikace je nejprve spuštěna metoda \textit{loadTree()}. Tato metoda se stará o vytvoření abstraktního syntaktického stromu v paměti aplikace. Metoda otevře soubor a použije metodu \textit{parse()} k transformaci xml souboru do proměnné \textit{doc}. V této proměnné jsou k nalezení elementy z xml souboru. Metoda následně v cyklu načítá všechna pravidla pomocí metody \textit{getElementsByTagName("Rule")}, kde \textit{"Rule"} je značka použitá pro pravidla v xml souboru. Jednotlivé elementy, které cyklus načítá jsou přetypovány na typ \textit{Element}, který umožňuje zkoumání jednotlivých atributů xml záznamu. Pravidla, které cyklus načítá jsou uloženy do hashovací tabulky, kde klíčem je název pravidla a hodnotou objekt typu \textit{Rule}.
+
+Po načtení pravidel jsou do nich přidány další elementy. O to se stará metoda \textit{addGrammarElements()}, která prochází všechny potomky pravidel, které xml soubor obsahuje. Elementy jsou stejně jako při extrakci gramatiky několika typů. O rozdělení těchto typů se stará switch, který na základě názvu záznamu vytvoří objekt správného typu. Tyto elementy jsou přidány do proměnné \textit{elementList}, kterou obsahují všechna pravidla. Proměnná je implementována jako kolekce \textit{ArrayList}. Kvůli potřebě přidání všech typů do listu elementů byla vytvořena třída \textit{GrammarElement}, od které jsou odděděny všechny další třídy reprezentující elementy gramatiky. Zpracováním všech elementů, které xml soubor obsahuje, je v aplikaci vytvořen abstraktní syntaktický strom. Všechny prvky tohoto stromu obsahují odkaz na svůj nadřazený element a současně list elementů, které dále obsahují. 
+
+\section{Vytvoření modelu vlastností}
+Z AST je následně potřeba vytvořit model vlastností. Do tohoto modelu nebudou zaneseny všechny typy elementů z AST. Vlastnosti zde reprezentují pouze některé typy. Těmito typy jsou: 
+\begin{itemize}
+	\item \textit{Assignment}
+	\item \textit{Rule}
+	\item \textit{Parent}
+	\item \textit{Enum}
+\end{itemize}
+
+Tyto typy reprezentují vlastnosti, které budou zobrazovány v nástroji Pure::Variants. 
+
+Model vlastností je opět implementován stromovou architekturou. Listy tohoto stromu jsou implementovány třídou \textit{FeatureModelNode} podobně jako listy AST, s tím rozdílem, že obsahuje atributy nutné k vytvoření souboru importovatelného do nástroje Pure::Variants. Těmito atributy jsou \textit{id}, který slouží jako unikátní identifikátor, \textit{puid}, neboli identifikátor nadřazeného prvku a atribut \textit{element}, který odkazuje na element AST, který reprezentuje. Obsahuje také metodu \textit{getPVString()}, která vrací řetězec, jehož struktura odpovídá jednomu záznamu v požadovaném souboru.
+
+Vytvoření modelu je realizováno v metodě \textit{createFeatureModel()}, ve které je vytvořen kořen stromu. Na tento kořen jsou napojovány další elementy pomocí metody \textit{addNode()}. Tato metoda rekurzivně prochází původní AST a z jednotlivých elementů tvoří vlastnosti modelu. K přiřazení identifikátorů je používáno počitadlo, které je inkrementováno po vytvoření každého nového listu. 
+
+Aby bylo možné model vlastností v nástroji zobrazit, je třeba vytvořit soubor formátu \textit{CSV}. Struktura tohoto souboru je vidět v tabulce 6.1. Soubor je vytvářen v případě, kdy uživatel použil parametr 1 při spuštění, pro vytvoření souboru s modelem vlastností. O vytvoření tohoto souboru se stará metoda \textit{WriteToCSV()}. Metoda otevře nebo vytvoří soubor pro zapsání modelu vlastností, zapíše do něj názvy jednotlivých sloupců, záznam s kořenem stromu a následně spustí metodu \textit{printNodeToCSV}, která rekurzivně prochází model vlastností do hloubky a pomocí \textit{StringBuilderu} postupně zapisuje jednotlivé vlastnosti do souboru. Tento soubor je následně možné importovat do nástroje Pure::Variants. 
+
+\section{Generování}
+Generování finálního souboru je spuštěno v případě, že uživatel použil parametr 2 při spuštění aplikace. Aplikace vytvoří abstraktní syntaktický strom a model vlastností ve své paměti stejným způsobem, jako při spuštění s parametrem 1. Po vytvoření těchto datových struktur však není spuštěna metoda \textit{WriteToCSV()}, ale metoda \textit{exportTesa()}. Metoda otevře soubor s konfigurací, která byla exportována z nástroje Pure::Variants. Následně celý soubor řádek po řádku přečte a z každého řádku uloží název vlastnosti s jejím identifikátorem do hashovací tabulky \textit{exportMap}.
+
+Následně metoda vytvoří \textit{StringBuilder}, do kterého jsou všechny elementy generovány. Poté je spuštěna metoda \textit{parsetTree()}, která rekurzivně prochází původní model vlastností opět do hloubky. Při procházení testuje, zda hashovací tabulka \textit{exportMap} obsahuje aktuální zkoumanou vlastnost. Pokud ne, je vlastnost přeskočena. Pokud ano, znamená to, že uživatel aktuální vlastnost požaduje ve své konfiguraci a pro element z AST, který reprezentuje, je spuštěna metoda \textit{exportElement()}. Tato metoda se stará o veškeré generování komponent do \textit{StringBuilderu}. Návratovou hodnotou metody je booleanovská hodnota, která značí, zda byla vygenerována složená závorka \textit{\{}. Tato návratová hodnota slouží k doplnění uzavíracích složených závorek a k odsazení ve výsledném vygenerovaném souboru. Metoda na základě pozice elementu a jeho okolních elementů vyhodnocuje, jakým způsobem a jaké elementy budou do finálního souboru vygenerovány. O generování elementů se starají jednotlivé podmínky, které budou popsány dále. Po vygenerování veškerých komponent do \textit{StringBuilderu} je jeho obsah pomocí metody \textit{write} třídy \textit{PrintWriter} zapsán do souboru specifikovaném při spuštění aplikace.
+
+\subsection{Specifické podmínky}
+Metoda obsahuje specifické podmínky, které jsou nutné k pojmenování některých proměnných tak, aby byl finální soubor validní. Tyto metody zkoumají pouze název aktuálního nebo naposledy generovaného elementu. Podle těchto názvů následně generují validní hodnoty, které jsou dodatečně specifikované zadavatelem. Podmínky kontrolují: 
+
+\begin{itemize}
+	\item \textit{OutDigitalDriverTableRef} - vygenerováno \textit{Null}
+	\item \textit{InDifitalDriverTableRef} - vygenerováno \textit{Null}
+	\item \textit{tempSensor} - vygenerováno \textit{TemperatureSensor\\ Signals\_name.InputSignal\_name}
+	\item \textit{importedNamespace} - vygenerováno\textit{use importedNamespace.*}
+	\item \textit{maximalNumberInputSubsystems} - vygenerováno \textit{7}
+	\item \textit{maximalNumberOutputSubsystems} - vygenerováno \textit{5}
+	\item \textit{sortingIndex} - vygenerována hodnota počitadla \textit{sortingIndexCounter}
+	\item \textit{ConfigSubsystemItem} - vygenerováno \textit{System\_name.NameIUser\_name}
+	\item \textit{InputDriverType} - vygenerováno \textit{System\_name.NameINull\_name}
+	\item \textit{OutputDriverType} - vygenerováno \textit{System\_name.NameONull\_name}
+\end{itemize}
+ 
+Pokud generátor nenarazí na jednu z těchto specifických podmínkek začne procházet další podmínky tak, aby bezchybně generoval zbytek konfigurace.
+
+\subsection{Obecné podmínky}
+
+Metoda zjistí, jakého je generovaný element typu a na jaké pozici se nachází v listu elementů svého nadřazeného elementu. Tuto pozici uloží do lokální proměnné \textit{index}. Switch rozpozná, zda se jedná o typ \textit{Assignment}, nebo \textit{Rule}. Pokud je element typu \textit{Assignment}, podmínky nejprve zjístí, zda aktuální element obsahuje další elementy ve svém listu elementů. Pokud obsahuje pouze 1 další element, který je typu \textit{Keyword}, vypíše tento \textit{Keyword} do generovaného souboru.
+
+Pokud element žádné další elementy neobsahuje je testováno, zda je na počáteční pozici v nadřazeném listu elementů, nebo na vyšší pozici. Pokud je element na vyšší než počáteční pozici, je zkoumáno, zda před ním stojí jiný element typu \textit{Keyword}. Ve chvíli, kdy se na pozici před ním nachází \textit{Keyword}, je ještě testováno, zda element obsahuje referenci na nějaký další element. Pokud tuto referenci neobsahuje, je vypsán \textit{Keyword} na pozici před elementem a současně název elementu. Pokud element obsahuje referenci na další element, je opět vypsán \textit{Keyword} před ním a switch následně rozhoduje, jakým způsobem bude tento element generován, podle své reference. Pokud element referuje na datový typ \textit{STRING}, je vypsán název elementu v uvozovkách. Pokud referuje na datový typ \textit{ID}, je opět vypsán pouze jeho název. V přápadě, že element referuje na něco jiného, je vygenerován název reference, ke kterému je přidán suffix \textit{"\_name"}. V poslední řadě je zkoumáno, zda generovaný element není poslední ve svém nadřazeném listu elementů. Pokud poslední není a následuje za ním složená závorka ( \textit{\{} ), je tato závorka vygenerována a je nastaven příznak návratové hodnoty na \textit{true}.
+
+Pokud switch rozhodne, že element je typu \textit{Rule}, je nejprve testován, zda se jedná o jeden z výchozích datových typů pomocí metody \textit{exportDataType()}. Tyto datové typy jsou:
+
+\begin{itemize}
+	\item \textit{UINT} - vygenerována hodnota \textit{0}
+	\item \textit{INT} - vygenerována hodnota \textit{0}
+	\item \textit{NATIVE\_FLOAT} - vygenerována hodnota \textit{0.0}
+	\item \textit{HEX} vygenerována hodnota \textit{0x00}
+\end{itemize}
+
+Pokud element není jednoho z těchto datových typů, je kontrolováno, zda na první pozici jeho listu elementů stojí \textit{Keyword}. Pokud je současně element na druhé pozici také \textit{Keyword} a současně složená závorka \textit{\{}, jsou tyto dva elementy vygenerovány do finálního souboru a současně je nastaven přiznak návratové hodnoty na true.
+
+Posledním typem elementu, který switch rozpoznává je typ \textit{Enum}. V takovém případě pouze vygeneruje jeho hodnotu.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
